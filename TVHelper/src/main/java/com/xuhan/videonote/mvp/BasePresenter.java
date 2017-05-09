@@ -1,4 +1,4 @@
-package com.xuhan.videonote;
+package com.xuhan.videonote.mvp;
 
 /**
  * Created by meanhan on 2017/5/6.

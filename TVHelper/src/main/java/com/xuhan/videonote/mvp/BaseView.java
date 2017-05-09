@@ -1,4 +1,4 @@
-package com.xuhan.videonote;
+package com.xuhan.videonote.mvp;
 
 import android.view.View;
 
