@@ -3,8 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.xuhan.videonote.homepage.MainActivity">
     <item
+        android:id="@+id/action_searcher"
+        android:orderInCategory="80"
+        android:title="@string/action_searcher"
+        android:icon="@mipmap/ic_action_search"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_share"
+        android:orderInCategory="80"
+        android:title="@string/action_share"
+        android:icon="@mipmap/ic_action_search"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_scan"
+        android:orderInCategory="80"
+        android:title="@string/action_scan"
+        android:icon="@mipmap/ic_action_search"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_help"
+        android:orderInCategory="80"
+        android:title="@string/action_help"
+        android:icon="@mipmap/ic_action_search"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="80"
         android:title="@string/action_settings"
+        android:icon="@mipmap/ic_action_search"
         app:showAsAction="never" />
 </menu>

@@ -21,12 +21,14 @@ import com.xuhan.videonote.discover.DiscoverFragment;
 import com.xuhan.videonote.list.ListFragment;
 import com.xuhan.videonote.me.MeFragment;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener,
         ListFragment.OnFragmentInteractionListener, DiscoverFragment.OnFragmentInteractionListener,
         MeFragment.OnFragmentInteractionListener, BottomNavigationBar.OnTabSelectedListener {
 
+    private Toolbar toolbar;
     private BottomNavigationBar mNavigationBar;
     private BadgeItem badgeItem; //添加角标
     private ViewPager mViewPager;
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         initViewPager();
         initNavigationBar();
@@ -52,24 +54,43 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
+    // 设置Menu菜单显示图标
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+        if (menu != null) {
+            if (menu.getClass().getSimpleName().equalsIgnoreCase("MenuBuilder")) {
+                try {
+                    Method method = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+                    method.setAccessible(true);
+                    method.invoke(menu, true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return super.onMenuOpened(featureId, menu);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_searcher:
+                break;
+            case R.id.action_scan:
+                break;
+            case R.id.action_help:
+                break;
+            case R.id.action_settings:
+                break;
+            default:
+                break;
         }
-
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     private void initViewPager() {
@@ -102,17 +123,19 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     private void initNavigationBar() {
         mNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         mNavigationBar.setTabSelectedListener(this);
+        // MODE_FIXED  MODE_SHIFTING
         mNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
+        // BACKGROUND_STYLE_RIPPLE  BACKGROUND_STYLE_STATIC
         mNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         mNavigationBar.setBarBackgroundColor(R.color.colorWhite);
         mNavigationBar.addItem(new BottomNavigationItem(R.drawable.ic_home_white_24dp, "首页").setActiveColorResource(
                 R.color.colorGreen))
                 .addItem(new BottomNavigationItem(R.drawable.ic_book_white_24dp, "列表").setActiveColorResource(
-                        R.color.colorGreen))
+                        R.color.colorPrimary))
                 .addItem(new BottomNavigationItem(R.drawable.ic_find_replace_white_24dp, "发现").setActiveColorResource(
-                        R.color.colorGreen))
+                        R.color.colorAccent))
                 .addItem(new BottomNavigationItem(R.drawable.ic_favorite_white_24dp, "我的").setActiveColorResource(
-                        R.color.colorGreen))
+                        R.color.colorRed))
                 .setFirstSelectedPosition(0)
                 .initialise();
     }
