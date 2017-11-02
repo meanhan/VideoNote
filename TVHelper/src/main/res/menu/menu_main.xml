@@ -4,7 +4,6 @@
     tools:context="com.xuhan.videonote.homepage.MainActivity">
     <item
         android:id="@+id/action_searcher"
-        android:orderInCategory="80"
         android:title="@string/action_searcher"
         android:icon="@mipmap/ic_action_search"
         app:showAsAction="always" />

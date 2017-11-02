@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
     private Toolbar toolbar;
     private BottomNavigationBar mNavigationBar;
+    private FloatingActionButton mActionButton;
     private BadgeItem badgeItem; //添加角标
     private ViewPager mViewPager;
     private ArrayList<Fragment> mFragmentList;
@@ -39,15 +41,14 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mActionButton = (FloatingActionButton) findViewById(R.id.fab);
         setSupportActionBar(toolbar);
         initViewPager();
         initNavigationBar();
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "bar", Toast.LENGTH_SHORT).show();
             }
         });
     }
