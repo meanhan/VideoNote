@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -29,28 +31,23 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         ListFragment.OnFragmentInteractionListener, DiscoverFragment.OnFragmentInteractionListener,
         MeFragment.OnFragmentInteractionListener, BottomNavigationBar.OnTabSelectedListener {
 
-    private Toolbar toolbar;
+
     private BottomNavigationBar mNavigationBar;
-    private FloatingActionButton mActionButton;
     private BadgeItem badgeItem; //添加角标
-    private ViewPager mViewPager;
     private ArrayList<Fragment> mFragmentList;
+    private HomeFragment mHomeFragment;
+    private ListFragment mListFragment;
+    private DiscoverFragment mDiscoverFragment;
+    private MeFragment meFragment;
+    private FragmentManager mFragmentManager;
+//    private FragmentTransaction mFragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        mActionButton = (FloatingActionButton) findViewById(R.id.fab);
-        setSupportActionBar(toolbar);
-        initViewPager();
+        initFragment();
         initNavigationBar();
-        mActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "bar", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
@@ -76,49 +73,28 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         return super.onMenuOpened(featureId, menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.action_searcher:
-                break;
-            case R.id.action_scan:
-                break;
-            case R.id.action_help:
-                break;
-            case R.id.action_settings:
-                break;
-            default:
-                break;
-        }
-        return true;
-    }
-
-    private void initViewPager() {
-        mViewPager = (ViewPager) findViewById(R.id.viewPager);
+    private void initFragment() {
+        mHomeFragment = HomeFragment.newInstance("", "");
+        mListFragment = ListFragment.newInstance("", "");
+        mDiscoverFragment = DiscoverFragment.newInstance("", "");
+        meFragment = MeFragment.newInstance("", "");
         mFragmentList = new ArrayList<>();
-        mFragmentList.add(HomeFragment.newInstance("", ""));
-        mFragmentList.add(ListFragment.newInstance("", ""));
-        mFragmentList.add(DiscoverFragment.newInstance("", ""));
-        mFragmentList.add(MeFragment.newInstance("", ""));
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), mFragmentList);
-        mViewPager.setAdapter(adapter);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                mNavigationBar.selectTab(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+        mFragmentList.add(mHomeFragment);
+        mFragmentList.add(mListFragment);
+        mFragmentList.add(mDiscoverFragment);
+        mFragmentList.add(meFragment);
+        mFragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+//        mFragmentTransaction.add(mHomeFragment,"home");
+//        mFragmentTransaction.add(mListFragment,"list");
+//        mFragmentTransaction.add(mDiscoverFragment,"discover");
+//        mFragmentTransaction.add(meFragment,"me");
+//        mFragmentTransaction.show(mHomeFragment);
+//        mFragmentTransaction.hide(mListFragment);
+//        mFragmentTransaction.hide(mDiscoverFragment);
+//        mFragmentTransaction.hide(meFragment);
+        fragmentTransaction.replace(R.id.layout_frame, mHomeFragment);
+        fragmentTransaction.commit();
     }
 
     private void initNavigationBar() {
@@ -143,7 +119,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
     @Override
     public void onTabSelected(int position) {
-        mViewPager.setCurrentItem(position);
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.layout_frame, mFragmentList.get(position));
+        fragmentTransaction.commit();
     }
 
     @Override
