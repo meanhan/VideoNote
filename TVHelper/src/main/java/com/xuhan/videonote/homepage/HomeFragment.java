@@ -59,12 +59,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         toolbar = mRootView.findViewById(R.id.toolbar);
         setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.inflateMenu(R.menu.menu_main);
         mRecyclerView = mRootView.findViewById(R.id.home_recycler_view);
         mActionButton = mRootView.findViewById(R.id.fab);
         initDatas();
         bindListener();
         return mRootView;
     }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

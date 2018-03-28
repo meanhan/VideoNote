@@ -3,11 +3,20 @@ package com.xuhan.videonote.me;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+
+import com.bumptech.glide.Glide;
 import com.xuhan.videonote.R;
 
 public class MeFragment extends Fragment {
@@ -20,6 +29,12 @@ public class MeFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private View mRootView;
+    private Toolbar mToolbar;
+    private CollapsingToolbarLayout mCollapsingToolbar;
+    private ImageView mToolbarBg;
+    private ImageView mToolbarIcon;
+    private RecyclerView mRecyclerView;
 
     public MeFragment() {
         // Required empty public constructor
@@ -47,8 +62,20 @@ public class MeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_me, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_me, container, false);
+        mToolbar = mRootView.findViewById(R.id.me_toolbar);
+        mCollapsingToolbar = mRootView.findViewById(R.id.me_collapsing_toolbar);
+        mToolbarBg = mRootView.findViewById(R.id.me_toolbar_bg);
+        mToolbarIcon = mRootView.findViewById(R.id.me_toolbar_icon);
+        initView();
+        ((AppCompatActivity) getActivity()).setSupportActionBar(null);
+        return mRootView;
+    }
+
+    private void initView(){
+        mCollapsingToolbar.setTitle(getString(R.string.my));
+        Glide.with(this).load(R.drawable.image01).into(mToolbarBg);
+        Glide.with(this).load(R.drawable.image02).into(mToolbarIcon);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -76,7 +103,6 @@ public class MeFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }
