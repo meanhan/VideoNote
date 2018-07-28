@@ -10,4 +10,6 @@
     <string name="list">列表</string>
     <string name="find">发现</string>
     <string name="my">我的</string>
+
+    <string name="no_video">没有视频</string>
 </resources>

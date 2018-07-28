@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xuhan.videonote">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".application.HomeApplication"
         android:allowBackup="true"
@@ -23,6 +28,7 @@
             android:name=".settings.SettingActivity"
             android:theme="@style/ApiTheme">
         </activity>
+        <activity android:name=".player.PlayerActivity"/>
     </application>
 
 </manifest>

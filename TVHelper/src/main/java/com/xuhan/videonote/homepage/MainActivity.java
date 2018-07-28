@@ -1,13 +1,21 @@
 package com.xuhan.videonote.homepage;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -31,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         ListFragment.OnFragmentInteractionListener, DiscoverFragment.OnFragmentInteractionListener,
         MeFragment.OnFragmentInteractionListener, BottomNavigationBar.OnTabSelectedListener {
 
-
+    public static final int REQUEST_CODE_ASK_PERMISSIONS = 100;
     private BottomNavigationBar mNavigationBar;
     private BadgeItem badgeItem; //添加角标
     private ArrayList<Fragment> mFragmentList;
@@ -48,6 +56,17 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         setContentView(R.layout.activity_main);
         initFragment();
         initNavigationBar();
+        if (!checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            new AlertDialog.Builder(this)
+                    .setMessage("为了正常读取视频,需要授权.")
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            showPermissionDialog(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
+                        }
+                    })
+                    .show();
+        }
     }
 
     @Override
@@ -73,9 +92,38 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         return super.onMenuOpened(featureId, menu);
     }
 
+    public static boolean checkPermission(final Activity activity, final String permission){
+        if(Build.VERSION.SDK_INT >= 23) {
+            int storagePermission = ActivityCompat.checkSelfPermission(activity, permission);
+            if (storagePermission != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void showPermissionDialog(final Activity activity, String permission) {
+        if (!ActivityCompat.shouldShowRequestPermissionRationale(activity,permission)) {
+            ActivityCompat.requestPermissions(activity, new String[]{permission},REQUEST_CODE_ASK_PERMISSIONS);
+            return;
+        }
+        ActivityCompat.requestPermissions(activity,new String[]{permission},REQUEST_CODE_ASK_PERMISSIONS);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == REQUEST_CODE_ASK_PERMISSIONS){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(this,"取得权限",Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this,"未取得权限",Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     private void initFragment() {
         mHomeFragment = HomeFragment.newInstance("", "");
-        mListFragment = ListFragment.newInstance("", "");
+        mListFragment = ListFragment.newInstance("");
         mDiscoverFragment = DiscoverFragment.newInstance("", "");
         meFragment = MeFragment.newInstance("", "");
         mFragmentList = new ArrayList<>();

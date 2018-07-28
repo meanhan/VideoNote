@@ -23,7 +23,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  */
 
 public class HttpManager {
-    private static final String BASE_URL = "http://api.avatarmind.com/QueueServer/v1/";
+    private static final String BASE_URL = "http://api.xuhan.com/Server/v1/";
     private static HttpManager mInstance;
     private final Retrofit mRetrofit;
     private final APIService mApiService;
