@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.xuhan.videonote.R;
 import com.xuhan.videonote.adapter.VideoListAdapter;
 import com.xuhan.videonote.bean.MediaBean;
-import com.xuhan.videonote.mvp.ListContract;
 import com.xuhan.videonote.player.PlayerActivity;
 
 import java.util.ArrayList;

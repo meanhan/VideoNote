@@ -41,7 +41,14 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         }
     }
 
+    public HomeRecyclerAdapter() {
+    }
+
     public HomeRecyclerAdapter(List<VideoBean> dataList) {
+        this.mDataList = dataList;
+    }
+
+    public void setDataList(List<VideoBean> dataList) {
         this.mDataList = dataList;
     }
 

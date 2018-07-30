@@ -1,14 +1,15 @@
 package com.xuhan.videonote.mvp;
 
-import android.view.View;
+import android.content.Context;
 
 /**
- * Created by meanhan on 2017/5/6.
+ * MVPPlugin
  */
 
-public interface BaseView<T> {
-
-    void setPresenter(T presenter);
-
-    void initView(View view);
+public interface BaseView {
+     Context getContext();
+     int getLayoutId();
+     void initView();
+     void initData();
+     void initListener();
 }

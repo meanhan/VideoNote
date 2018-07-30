@@ -1,9 +1,11 @@
 package com.xuhan.videonote.mvp;
 
 /**
- * Created by meanhan on 2017/5/6.
+ * MVPPlugin
  */
 
-public interface BasePresenter {
-    void start();
+public interface  BasePresenter <V extends BaseView>{
+    void attachView(V view);
+
+    void detachView();
 }

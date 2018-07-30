@@ -1,4 +1,4 @@
-package com.xuhan.videonote.homepage;
+package com.xuhan.videonote.activity;
 
 import android.Manifest;
 import android.app.Activity;
@@ -8,34 +8,28 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.xuhan.videonote.R;
-import com.xuhan.videonote.adapter.ViewPagerAdapter;
 import com.xuhan.videonote.discover.DiscoverFragment;
+import com.xuhan.videonote.home.HomeFragment;
 import com.xuhan.videonote.list.ListFragment;
 import com.xuhan.videonote.me.MeFragment;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener,
+public class MainActivity extends AppCompatActivity implements HomeFragment.OnHomeFragmentListener,
         ListFragment.OnFragmentInteractionListener, DiscoverFragment.OnFragmentInteractionListener,
         MeFragment.OnFragmentInteractionListener, BottomNavigationBar.OnTabSelectedListener {
 
@@ -184,6 +178,11 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onFragmentClick() {
 
     }
 }
