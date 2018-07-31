@@ -17,6 +17,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding{
+        enabled true
+    }
 //    sourceSets {
 //        main {
 //            jni.srcDirs = []
@@ -39,13 +42,18 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.8.0'
     compile 'com.jakewharton:butterknife:8.5.1'
     compile 'org.litepal.android:core:1.4.0'
+    // Retrofit OKHttp
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.okio:okio:1.13.0'
     compile 'com.google.code.gson:gson:2.8.2'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.retrofit2:converter-scalars:2.3.0'
+
     compile 'com.android.support:recyclerview-v7:27.1.0'
     compile 'com.android.support:cardview-v7:27.1.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    // IjkPlayerView播放器
     implementation 'com.github.Rukey7:IjkPlayerView:1.0.0'
+    // Dialog样式库
+    implementation 'com.github.yilylong:CBDialog:v1.0.7'
 }
