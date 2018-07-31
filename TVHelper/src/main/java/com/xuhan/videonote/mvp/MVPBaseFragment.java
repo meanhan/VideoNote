@@ -48,10 +48,6 @@ public abstract class MVPBaseFragment<V extends BaseView, T extends BasePresente
         return super.getContext();
     }
 
-    public int getLayoutId() {
-        return 0;
-    }
-
     public <T> T getInstance(Object o, int i) {
         try {
             return ((Class<T>) ((ParameterizedType) (o.getClass()

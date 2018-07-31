@@ -40,7 +40,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     private OnHomeFragmentListener mListener;
 
     public interface OnHomeFragmentListener {
-        void onFragmentClick();
+        void onHomeFragmentClick();
     }
 
     public static HomeFragment newInstance(String param1, String param2) {

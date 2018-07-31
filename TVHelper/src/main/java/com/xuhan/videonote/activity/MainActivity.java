@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,7 +15,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.widget.Toast;
-
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -24,14 +22,13 @@ import com.xuhan.videonote.R;
 import com.xuhan.videonote.discover.DiscoverFragment;
 import com.xuhan.videonote.home.HomeFragment;
 import com.xuhan.videonote.list.ListFragment;
-import com.xuhan.videonote.me.MeFragment;
-
+import com.xuhan.videonote.personalcenter.PersonalCenterFragment;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnHomeFragmentListener,
-        ListFragment.OnFragmentInteractionListener, DiscoverFragment.OnFragmentInteractionListener,
-        MeFragment.OnFragmentInteractionListener, BottomNavigationBar.OnTabSelectedListener {
+        ListFragment.OnListFragmentListener, DiscoverFragment.OnDiscoverFragmentListener,
+        PersonalCenterFragment.OnPersonalFragmentListener, BottomNavigationBar.OnTabSelectedListener {
 
     public static final int REQUEST_CODE_ASK_PERMISSIONS = 100;
     private BottomNavigationBar mNavigationBar;
@@ -40,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
     private HomeFragment mHomeFragment;
     private ListFragment mListFragment;
     private DiscoverFragment mDiscoverFragment;
-    private MeFragment meFragment;
+    private PersonalCenterFragment mPersonalFragment;
     private FragmentManager mFragmentManager;
 //    private FragmentTransaction mFragmentTransaction;
 
@@ -48,19 +45,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        requestPermissions();
         initFragment();
         initNavigationBar();
-        if (!checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            new AlertDialog.Builder(this)
-                    .setMessage("为了正常读取视频,需要授权.")
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            showPermissionDialog(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-                        }
-                    })
-                    .show();
-        }
     }
 
     @Override
@@ -115,26 +102,40 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
         }
     }
 
+    private void requestPermissions() {
+        if (!checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            new AlertDialog.Builder(this)
+                    .setMessage("为了正常读取视频,需要授权.")
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            showPermissionDialog(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
+                        }
+                    })
+                    .show();
+        }
+    }
+
     private void initFragment() {
         mHomeFragment = HomeFragment.newInstance("", "");
         mListFragment = ListFragment.newInstance("");
-        mDiscoverFragment = DiscoverFragment.newInstance("", "");
-        meFragment = MeFragment.newInstance("", "");
+        mDiscoverFragment = DiscoverFragment.newInstance("");
+        mPersonalFragment = PersonalCenterFragment.newInstance("");
         mFragmentList = new ArrayList<>();
         mFragmentList.add(mHomeFragment);
         mFragmentList.add(mListFragment);
         mFragmentList.add(mDiscoverFragment);
-        mFragmentList.add(meFragment);
+        mFragmentList.add(mPersonalFragment);
         mFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
 //        mFragmentTransaction.add(mHomeFragment,"home");
 //        mFragmentTransaction.add(mListFragment,"list");
 //        mFragmentTransaction.add(mDiscoverFragment,"discover");
-//        mFragmentTransaction.add(meFragment,"me");
+//        mFragmentTransaction.add(mPersonalFragment,"me");
 //        mFragmentTransaction.show(mHomeFragment);
 //        mFragmentTransaction.hide(mListFragment);
 //        mFragmentTransaction.hide(mDiscoverFragment);
-//        mFragmentTransaction.hide(meFragment);
+//        mFragmentTransaction.hide(mPersonalFragment);
         fragmentTransaction.replace(R.id.layout_frame, mHomeFragment);
         fragmentTransaction.commit();
     }
@@ -177,12 +178,22 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onHomeFragmentClick() {
 
     }
 
     @Override
-    public void onFragmentClick() {
+    public void onListFragmentClick() {
+
+    }
+
+    @Override
+    public void onDiscoverFragmentClick() {
+
+    }
+
+    @Override
+    public void onPersonalFragmentClick() {
 
     }
 }
