@@ -28,7 +28,7 @@ public class PlayerActivity extends AppCompatActivity {
                 .setTitle(media.getTitle())  // 设置标题，全屏时显示
 //                .setSkipTip(1000*60*1)  // 设置跳转提示
                 .enableOrientation()    // 使能重力翻转
-                .alwaysFullScreen() // 固定全屏
+//                .alwaysFullScreen() // 固定全屏
                 .setVideoPath(media.getPath())    // 设置视频Url，单个视频源可用这个
 //                .setVideoSource(null, VIDEO_URL, VIDEO_URL, VIDEO_URL, null)  // 设置视频Url，多个视频源用这个
                 .setMediaQuality(IjkPlayerView.MEDIA_QUALITY_HIGH)  // 指定初始视频源

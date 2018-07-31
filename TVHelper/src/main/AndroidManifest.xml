@@ -28,7 +28,10 @@
             android:name=".settings.SettingActivity"
             android:theme="@style/ApiTheme">
         </activity>
-        <activity android:name=".player.PlayerActivity"/>
+        <activity
+            android:name=".player.PlayerActivity"
+            android:theme="@style/PlayerTheme"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
     </application>
 
 </manifest>
