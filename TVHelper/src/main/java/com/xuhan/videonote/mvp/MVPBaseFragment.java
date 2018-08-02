@@ -21,7 +21,7 @@ import java.lang.reflect.ParameterizedType;
 public abstract class MVPBaseFragment<V extends BaseView, T extends BasePresenterImpl<V>> extends Fragment implements BaseView {
     public T mPresenter;
     public View fragmentView;
-    private Dialog mDialog;
+    private Dialog mLoadingDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,8 +46,8 @@ public abstract class MVPBaseFragment<V extends BaseView, T extends BasePresente
         if (mPresenter != null) {
             mPresenter.detachView();
         }
-        if (mDialog != null) {
-            mDialog = null;
+        if (mLoadingDialog != null) {
+            mLoadingDialog = null;
         }
     }
 
@@ -74,19 +74,19 @@ public abstract class MVPBaseFragment<V extends BaseView, T extends BasePresente
     }
 
     public void showLoadingDialog() {
-        if (mDialog == null) {
-            mDialog = new CBDialogBuilder(getActivity(), CBDialogBuilder.DIALOG_STYLE_PROGRESS_AVLOADING)
+        if (mLoadingDialog == null) {
+            mLoadingDialog = new CBDialogBuilder(getActivity(), CBDialogBuilder.DIALOG_STYLE_PROGRESS_AVLOADING)
                     .setTouchOutSideCancelable(true) // 设置是否点击对话框以外的区域dismiss对话框
                     .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM) // 设置对话框的动画样式
                     .setDialoglocation(CBDialogBuilder.DIALOG_LOCATION_CENTER)  // 设置对话框位于屏幕的位置
                     .create();
         }
-        mDialog.show();
+        mLoadingDialog.show();
     }
 
     public void dismissLoadingDialog() {
-        if (mDialog != null) {
-            mDialog.dismiss();
+        if (mLoadingDialog != null) {
+            mLoadingDialog.dismiss();
         }
     }
 }

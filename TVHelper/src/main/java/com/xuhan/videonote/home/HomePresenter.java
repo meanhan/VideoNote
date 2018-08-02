@@ -1,14 +1,8 @@
 package com.xuhan.videonote.home;
 
-import android.util.Log;
-
 import com.xuhan.videonote.bean.MovieEntity;
-import com.xuhan.videonote.bean.VideoBean;
 import com.xuhan.videonote.http.HttpManager;
 import com.xuhan.videonote.mvp.BasePresenterImpl;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
