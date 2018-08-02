@@ -2,6 +2,8 @@ package com.xuhan.videonote.http;
 
 import android.content.Context;
 
+import com.xuhan.videonote.bean.MovieEntity;
+import com.xuhan.videonote.contants.ApiContants;
 import com.xuhan.videonote.utils.NetworkUtil;
 
 import java.io.File;
@@ -16,6 +18,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
@@ -23,7 +26,6 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  */
 
 public class HttpManager {
-    private static final String BASE_URL = "http://api.xuhan.com/Server/v1/";
     private static HttpManager mInstance;
     private final Retrofit mRetrofit;
     private final APIService mApiService;
@@ -73,9 +75,10 @@ public class HttpManager {
                 .addInterceptor(interceptor)
                 .cache(cache).build();
         mRetrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(ApiContants.DOUBAN_MOVIE_BASE_URL)
                 .client(client)
-                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create()) // 返回String
+                .addConverterFactory(GsonConverterFactory.create())   // 加入Gson转化
                 .build();
         mApiService = mRetrofit.create(APIService.class);
     }
@@ -94,8 +97,8 @@ public class HttpManager {
         return mInstance;
     }
 
-    public void getCategory(Callback<String> callback){
-        mApiService.getCategory().enqueue(callback);
+    public void getInTheatersMovie(Callback<MovieEntity> callback) {
+        mApiService.getInTheatersMovie().enqueue(callback);
     }
 
     public void getCategoryContent(Callback<String> callback){

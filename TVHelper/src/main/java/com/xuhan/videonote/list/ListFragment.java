@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.xuhan.videonote.R;
 import com.xuhan.videonote.adapter.VideoListAdapter;
-import com.xuhan.videonote.bean.MediaBean;
+import com.xuhan.videonote.bean.LocalMediaEntity;
 import com.xuhan.videonote.mvp.MVPBaseFragment;
 import com.xuhan.videonote.player.PlayerActivity;
 import com.zhl.cbdialog.CBDialogBuilder;
@@ -30,9 +30,8 @@ public class ListFragment extends MVPBaseFragment<ListContract.View, ListPresent
     private TextView mTextView;
     private RecyclerView mRecyclerView;
     private VideoListAdapter mAdapter;
-    private List<MediaBean> mediaList;
+    private List<LocalMediaEntity> mediaList;
     private OnListFragmentListener mListener;
-    private Dialog mDialog;
 
     public interface OnListFragmentListener {
         void onListFragmentClick();
@@ -69,7 +68,6 @@ public class ListFragment extends MVPBaseFragment<ListContract.View, ListPresent
     public void onDetach() {
         super.onDetach();
         mListener = null;
-        mDialog = null;
     }
 
     @Override
@@ -89,7 +87,6 @@ public class ListFragment extends MVPBaseFragment<ListContract.View, ListPresent
 
     @Override
     public void initData() {
-        showLoadingDialog();
         mPresenter.loadData();
     }
 
@@ -98,7 +95,7 @@ public class ListFragment extends MVPBaseFragment<ListContract.View, ListPresent
         mAdapter.setItemClickListener(new VideoListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                MediaBean media = mediaList.get(position);
+                LocalMediaEntity media = mediaList.get(position);
                 Intent intent = new Intent(getActivity(), PlayerActivity.class);
                 intent.putExtra("media", media);
                 startActivity(intent);
@@ -107,8 +104,7 @@ public class ListFragment extends MVPBaseFragment<ListContract.View, ListPresent
     }
 
     @Override
-    public void loadSuccess(List<MediaBean> list) {
-//        dismissLoadingDialog();
+    public void loadSuccess(List<LocalMediaEntity> list) {
         mediaList = list;
         mTextView.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
@@ -118,24 +114,8 @@ public class ListFragment extends MVPBaseFragment<ListContract.View, ListPresent
 
     @Override
     public void loadFailed(String message) {
-//        dismissLoadingDialog();
         mTextView.setVisibility(View.VISIBLE);
         mRecyclerView.setVisibility(View.GONE);
-    }
-
-    public void showLoadingDialog() {
-        mDialog = new CBDialogBuilder(getActivity(), CBDialogBuilder.DIALOG_STYLE_PROGRESS_AVLOADING)
-                .setTouchOutSideCancelable(true) // 设置是否点击对话框以外的区域dismiss对话框
-                .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM) // 设置对话框的动画样式
-                .setDialoglocation(CBDialogBuilder.DIALOG_LOCATION_CENTER)  // 设置对话框位于屏幕的位置
-                .create();
-        mDialog.show();
-    }
-
-    public void dismissLoadingDialog() {
-        if (mDialog != null) {
-            mDialog.dismiss();
-        }
     }
 
     private void onFragmentClick() {

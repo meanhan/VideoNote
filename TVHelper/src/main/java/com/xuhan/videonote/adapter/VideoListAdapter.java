@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.xuhan.videonote.R;
-import com.xuhan.videonote.bean.MediaBean;
+import com.xuhan.videonote.bean.LocalMediaEntity;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.MyVi
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private List<MediaBean> mDataList;
+    private List<LocalMediaEntity> mDataList;
     private OnItemClickListener mItemClickListener;
 
     public VideoListAdapter(Context context) {
@@ -30,7 +30,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.MyVi
         mLayoutInflater = LayoutInflater.from(context);
     }
 
-    public VideoListAdapter(Context context, List<MediaBean> dataList) {
+    public VideoListAdapter(Context context, List<LocalMediaEntity> dataList) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
         mDataList = dataList;
@@ -44,18 +44,18 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.MyVi
         this.mItemClickListener = itemClickListener;
     }
 
-    public void setDataList(List<MediaBean> dataList) {
+    public void setDataList(List<LocalMediaEntity> dataList) {
         this.mDataList = dataList;
     }
 
     @Override
     public VideoListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MyViewHolder(mLayoutInflater.inflate(R.layout.recyclerview_list_item, parent, false));
+        return new MyViewHolder(mLayoutInflater.inflate(R.layout.list_recycler_item, parent, false));
     }
 
     @Override
     public void onBindViewHolder(final VideoListAdapter.MyViewHolder holder, final int position) {
-        MediaBean media = mDataList.get(position);
+        LocalMediaEntity media = mDataList.get(position);
         holder.mTextView.setText(media.getTitle());
         Glide.with(mContext).load(media.getThumb()).into(holder.mImageView);
         holder.itemView.setOnClickListener(new View.OnClickListener() {

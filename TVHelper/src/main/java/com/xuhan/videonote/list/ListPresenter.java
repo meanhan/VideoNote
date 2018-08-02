@@ -4,7 +4,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-import com.xuhan.videonote.bean.MediaBean;
+import com.xuhan.videonote.bean.LocalMediaEntity;
 import com.xuhan.videonote.mvp.BasePresenterImpl;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class ListPresenter extends BasePresenterImpl<ListContract.View> implemen
     @Override
     public void loadData() {
         if (mView != null) {
-            List<MediaBean> mediaList = scanMediaFromSDCard();
+            List<LocalMediaEntity> mediaList = scanMediaFromSDCard();
             if (!mediaList.isEmpty()) {
                 mView.loadSuccess(mediaList);
             } else {
@@ -28,8 +28,8 @@ public class ListPresenter extends BasePresenterImpl<ListContract.View> implemen
         }
     }
 
-    private List<MediaBean> scanMediaFromSDCard() {
-        List<MediaBean> dataList = new ArrayList<>();
+    private List<LocalMediaEntity> scanMediaFromSDCard() {
+        List<LocalMediaEntity> dataList = new ArrayList<>();
         Uri uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
         // MediaStore.Video.Thumbnails.DATA:视频缩略图的文件路径
         String[] thumbColumns = {MediaStore.Video.Thumbnails.DATA,
@@ -49,7 +49,7 @@ public class ListPresenter extends BasePresenterImpl<ListContract.View> implemen
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 do {
-                    MediaBean media = new MediaBean();
+                    LocalMediaEntity media = new LocalMediaEntity();
                     int id = cursor.getInt(cursor
                             .getColumnIndex(MediaStore.Video.Media._ID));
                     String title = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DISPLAY_NAME));

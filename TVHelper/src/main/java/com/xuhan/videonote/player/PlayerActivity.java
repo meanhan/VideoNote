@@ -7,12 +7,12 @@ import android.view.KeyEvent;
 
 import com.dl7.player.media.IjkPlayerView;
 import com.xuhan.videonote.R;
-import com.xuhan.videonote.bean.MediaBean;
+import com.xuhan.videonote.bean.LocalMediaEntity;
 
 public class PlayerActivity extends AppCompatActivity {
 
     private IjkPlayerView mPlayerView;
-    private MediaBean media;
+    private LocalMediaEntity media;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

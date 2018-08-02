@@ -12,10 +12,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.xuhan.videonote.R;
-import com.xuhan.videonote.bean.VideoBean;
+import com.xuhan.videonote.bean.MovieEntity;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by xuhan on 18-3-3.
@@ -24,9 +24,9 @@ import java.util.Random;
 public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<VideoBean> mDataList;
+    private List<MovieEntity.SubjectsEntity> mDataList = new ArrayList<>();
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         ImageView cardImage;
         TextView cardName;
@@ -44,36 +44,36 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     public HomeRecyclerAdapter() {
     }
 
-    public HomeRecyclerAdapter(List<VideoBean> dataList) {
+    public HomeRecyclerAdapter(List<MovieEntity.SubjectsEntity> dataList) {
         this.mDataList = dataList;
     }
 
-    public void setDataList(List<VideoBean> dataList) {
+    public void setDataList(List<MovieEntity.SubjectsEntity> dataList) {
         this.mDataList = dataList;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if(mContext == null){
+        if (mContext == null) {
             mContext = parent.getContext();
         }
-        View view = LayoutInflater.from(mContext).inflate(R.layout.recycler_view_item,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.home_recycler_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        VideoBean data = mDataList.get(position);
-        holder.cardName.setText(data.getName());
-        holder.cardNumber.setText(data.getEpisodes());
-        int[] images = {R.drawable.image01,R.drawable.image02,R.drawable.image03,R.drawable.image04};
-        int index = new Random().nextInt(3);
-        Glide.with(mContext).load(images[index]).into(holder.cardImage);
+        MovieEntity.SubjectsEntity subjects = mDataList.get(position);
+        holder.cardName.setText(subjects.getTitle());
+        holder.cardNumber.setText(subjects.getYear());
+//        int[] images = {R.drawable.image01, R.drawable.image02, R.drawable.image03, R.drawable.image04};
+//        int index = new Random().nextInt(3);
+        Glide.with(mContext).load(subjects.getImages().getLarge()).into(holder.cardImage);
     }
 
     @Override
     public int getItemCount() {
-        return mDataList.size();
+        return mDataList.isEmpty() ? 0 : mDataList.size();
     }
 }

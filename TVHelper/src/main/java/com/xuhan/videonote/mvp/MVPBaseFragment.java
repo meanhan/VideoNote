@@ -1,5 +1,6 @@
 package com.xuhan.videonote.mvp;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.zhl.cbdialog.CBDialogBuilder;
 
 import java.lang.reflect.ParameterizedType;
 
@@ -18,6 +21,7 @@ import java.lang.reflect.ParameterizedType;
 public abstract class MVPBaseFragment<V extends BaseView, T extends BasePresenterImpl<V>> extends Fragment implements BaseView {
     public T mPresenter;
     public View fragmentView;
+    private Dialog mDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,8 +43,12 @@ public abstract class MVPBaseFragment<V extends BaseView, T extends BasePresente
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null)
+        if (mPresenter != null) {
             mPresenter.detachView();
+        }
+        if (mDialog != null) {
+            mDialog = null;
+        }
     }
 
     @Override
@@ -63,5 +71,22 @@ public abstract class MVPBaseFragment<V extends BaseView, T extends BasePresente
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void showLoadingDialog() {
+        if (mDialog == null) {
+            mDialog = new CBDialogBuilder(getActivity(), CBDialogBuilder.DIALOG_STYLE_PROGRESS_AVLOADING)
+                    .setTouchOutSideCancelable(true) // 设置是否点击对话框以外的区域dismiss对话框
+                    .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM) // 设置对话框的动画样式
+                    .setDialoglocation(CBDialogBuilder.DIALOG_LOCATION_CENTER)  // 设置对话框位于屏幕的位置
+                    .create();
+        }
+        mDialog.show();
+    }
+
+    public void dismissLoadingDialog() {
+        if (mDialog != null) {
+            mDialog.dismiss();
+        }
     }
 }

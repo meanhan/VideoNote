@@ -7,29 +7,29 @@ import android.os.Parcelable;
  * Created by xuhan on 18-7-25.
  */
 
-public class MediaBean implements Parcelable {
+public class LocalMediaEntity implements Parcelable {
     private String title;
     private String path;
     private String thumb;
 
-    public MediaBean() {
+    public LocalMediaEntity() {
     }
 
-    protected MediaBean(Parcel in) {
+    protected LocalMediaEntity(Parcel in) {
         title = in.readString();
         path = in.readString();
         thumb = in.readString();
     }
 
-    public static final Creator<MediaBean> CREATOR = new Creator<MediaBean>() {
+    public static final Creator<LocalMediaEntity> CREATOR = new Creator<LocalMediaEntity>() {
         @Override
-        public MediaBean createFromParcel(Parcel in) {
-            return new MediaBean(in);
+        public LocalMediaEntity createFromParcel(Parcel in) {
+            return new LocalMediaEntity(in);
         }
 
         @Override
-        public MediaBean[] newArray(int size) {
-            return new MediaBean[size];
+        public LocalMediaEntity[] newArray(int size) {
+            return new LocalMediaEntity[size];
         }
     };
 
@@ -59,7 +59,7 @@ public class MediaBean implements Parcelable {
 
     @Override
     public String toString() {
-        return "MediaBean{" +
+        return "LocalMediaEntity{" +
                 "title='" + title + '\'' +
                 ", path='" + path + '\'' +
                 ", thumb='" + thumb + '\'' +

@@ -1,5 +1,7 @@
 package com.xuhan.videonote.http;
 
+import com.xuhan.videonote.bean.MovieEntity;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 
@@ -9,8 +11,8 @@ import retrofit2.http.GET;
 
 public interface APIService {
 
-    @GET("categories")
-    Call<String> getCategory();
+    @GET("in_theaters")
+    Call<MovieEntity> getInTheatersMovie();
 
     @GET("categories/contents")
     Call<String> getCategoryContent();

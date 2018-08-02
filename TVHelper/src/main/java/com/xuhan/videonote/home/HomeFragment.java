@@ -3,25 +3,20 @@ package com.xuhan.videonote.home;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.xuhan.videonote.R;
 import com.xuhan.videonote.adapter.HomeRecyclerAdapter;
-import com.xuhan.videonote.bean.VideoBean;
+import com.xuhan.videonote.bean.MovieEntity;
 import com.xuhan.videonote.mvp.MVPBaseFragment;
 
 import java.util.List;
@@ -35,9 +30,10 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     private Toolbar toolbar;
     private RecyclerView mRecyclerView;
     private HomeRecyclerAdapter mAdapter;
-    private List<VideoBean> mVideoList;
+    private List<MovieEntity.SubjectsEntity> mMovieList;
     private FloatingActionButton mActionButton;
     private OnHomeFragmentListener mListener;
+
 
     public interface OnHomeFragmentListener {
         void onHomeFragmentClick();
@@ -126,18 +122,30 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     }
 
     @Override
-    public void loadSuccess(List<VideoBean> dataList) {
-        mVideoList = dataList;
-        refreshView();
+    public void loadSuccess(List<MovieEntity.SubjectsEntity> dataList) {
+        if (dataList != null) {
+            mMovieList = dataList;
+            refreshView();
+        }
     }
 
     @Override
     public void loadFailed(String message) {
+        Toast.makeText(getActivity(), "加载失败...", Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void startLoad() {
+        showLoadingDialog();
+    }
+
+    @Override
+    public void endLoad() {
+        dismissLoadingDialog();
     }
 
     private void refreshView() {
-        mAdapter.setDataList(mVideoList);
+        mAdapter.setDataList(mMovieList);
         mAdapter.notifyDataSetChanged();
     }
 }
