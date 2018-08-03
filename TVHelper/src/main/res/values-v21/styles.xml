@@ -11,7 +11,7 @@
         <!-- 溢出菜单图标颜色-->
         <item name="colorControlNormal">@android:color/white</item>
         <!-- 溢出菜单图标自定义-->
-        <item name="android:actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
+        <!--<item name="android:actionOverflowButtonStyle">@style/OverflowButtonStyle</item>-->
         <!-- 设置系统状态栏透明 5.0以后-->
         <item name="android:statusBarColor">@color/colorTransparent</item>
     </style>
@@ -47,7 +47,7 @@
     </style>
 
     <style name="OverflowButtonStyle" parent="Widget.AppCompat.Light.ActionButton.Overflow">
-        <item name="android:src">@mipmap/ic_action_add</item>
+
     </style>
 
     <style name="ApiTheme" parent="@android:style/Theme.DeviceDefault.Light.NoActionBar">

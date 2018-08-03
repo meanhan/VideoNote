@@ -5,30 +5,24 @@
     <item
         android:id="@+id/action_searcher"
         android:title="@string/action_searcher"
-        android:icon="@mipmap/ic_action_search"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/action_share"
-        android:orderInCategory="80"
-        android:title="@string/action_share"
-        android:icon="@mipmap/ic_action_search"
+        android:icon="@drawable/icon_search_white"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_scan"
         android:orderInCategory="80"
         android:title="@string/action_scan"
-        android:icon="@mipmap/ic_action_search"
+        android:icon="@drawable/icon_scan_white"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_help"
         android:orderInCategory="80"
         android:title="@string/action_help"
-        android:icon="@mipmap/ic_action_search"
+        android:icon="@drawable/icon_help_white"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="80"
         android:title="@string/action_settings"
-        android:icon="@mipmap/ic_action_search"
+        android:icon="@drawable/icon_setting_white"
         app:showAsAction="never" />
 </menu>

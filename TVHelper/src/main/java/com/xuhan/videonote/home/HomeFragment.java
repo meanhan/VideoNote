@@ -63,6 +63,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         mListener = null;
     }
 
+    // 设置 OptionsMenu显示图标
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
@@ -74,12 +75,16 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         int id = item.getItemId();
         switch (id) {
             case R.id.action_searcher:
+                Toast.makeText(getActivity(), "搜索", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_scan:
+                Toast.makeText(getActivity(), "扫一扫", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_help:
+                Toast.makeText(getActivity(), "帮助", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_settings:
+                Toast.makeText(getActivity(), "设置", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
@@ -97,7 +102,9 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         toolbar = fragmentView.findViewById(R.id.toolbar);
         setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        toolbar.inflateMenu(R.menu.menu_main);
+//        toolbar.inflateMenu(R.menu.menu_main);
+        toolbar.setTitle("热映电影");
+        toolbar.setOverflowIcon(getActivity().getDrawable(R.drawable.icon_more_white));
         mActionButton = fragmentView.findViewById(R.id.fab);
         mRecyclerView = fragmentView.findViewById(R.id.home_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());

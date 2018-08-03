@@ -5,10 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.xuhan.videonote.R;
 import com.xuhan.videonote.adapter.VideoListAdapter;
 import com.xuhan.videonote.bean.LocalMediaEntity;
@@ -32,6 +39,7 @@ public class ListFragment extends MVPBaseFragment<ListContract.View, ListPresent
     private List<LocalMediaEntity> mediaList;
     private OnListFragmentListener mListener;
     private SweetAlertDialog mLoadingDialog;
+    private Toolbar mToolbar;
 
     public interface OnListFragmentListener {
         void onListFragmentClick();
@@ -77,13 +85,49 @@ public class ListFragment extends MVPBaseFragment<ListContract.View, ListPresent
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_order:
+                Toast.makeText(getActivity(), "排序", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_refresh:
+                Toast.makeText(getActivity(), "刷新", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
+    @Override
     public void initView() {
+        mToolbar = fragmentView.findViewById(R.id.toolbar);
+        initToolbar();
         mRecyclerView = fragmentView.findViewById(R.id.recycler_view_list);
         mTextView = fragmentView.findViewById(R.id.tv_no_media);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new VideoListAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void initToolbar() {
+        setHasOptionsMenu(true);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        mToolbar.setTitle("本地视频");
+        mToolbar.setTitleTextColor(getActivity().getResources().getColor(R.color.textColorGray));
+        mToolbar.setBackgroundColor(getActivity().getResources().getColor(R.color.colorWhite));
+        // 设置右侧按钮图标
+        mToolbar.setOverflowIcon(getActivity().getDrawable(R.drawable.icon_more_gray));
+        getActivity().getWindow().setStatusBarColor(getActivity().getResources().getColor(R.color.color_transparent));
+
     }
 
     @Override
@@ -107,6 +151,7 @@ public class ListFragment extends MVPBaseFragment<ListContract.View, ListPresent
 
     @Override
     public void loadSuccess(List<LocalMediaEntity> list) {
+        dismissLoadingDialog();
         mediaList = list;
         mTextView.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
