@@ -3,7 +3,7 @@ package com.xuhan.videonote.bean;
 import java.util.List;
 
 /**
- * Created by xuhan on 18-8-2.
+ * @author  xuhan on 18-8-2.
  */
 
 public class MovieEntity {

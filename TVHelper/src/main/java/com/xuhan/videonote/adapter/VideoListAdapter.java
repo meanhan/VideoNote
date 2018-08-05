@@ -15,7 +15,7 @@ import com.xuhan.videonote.bean.LocalMediaEntity;
 import java.util.List;
 
 /**
- * Created by xuhan on 18-4-27.
+ * @author  xuhan on 18-4-27.
  */
 
 public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.MyViewHolder> {
@@ -37,6 +37,10 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.MyVi
     }
 
     public interface OnItemClickListener {
+        /**
+         * View点击事件
+         * @param position
+         */
         void onItemClick(int position);
     }
 

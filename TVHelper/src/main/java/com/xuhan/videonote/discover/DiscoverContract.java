@@ -4,7 +4,7 @@ import com.xuhan.videonote.mvp.BasePresenter;
 import com.xuhan.videonote.mvp.BaseView;
 
 /**
- * MVPPlugin
+ * @author meanhan
  */
 
 public class DiscoverContract {

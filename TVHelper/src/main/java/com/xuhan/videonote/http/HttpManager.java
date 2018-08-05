@@ -22,13 +22,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
- * Created by xuhan on 17-11-1.
+ * @author xuhan on 17-11-1.
  */
 
 public class HttpManager {
     private static HttpManager mInstance;
     private final Retrofit mRetrofit;
-    private final APIService mApiService;
+    private final ApiService mApiService;
     private Context mContext;
 
     private HttpManager(Context context) {
@@ -77,19 +77,18 @@ public class HttpManager {
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(ApiContants.DOUBAN_MOVIE_BASE_URL)
                 .client(client)
-                .addConverterFactory(ScalarsConverterFactory.create()) // 返回String
-                .addConverterFactory(GsonConverterFactory.create())   // 加入Gson转化
+                // 返回String
+                .addConverterFactory(ScalarsConverterFactory.create())
+                // 加入Gson转化
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        mApiService = mRetrofit.create(APIService.class);
+        mApiService = mRetrofit.create(ApiService.class);
     }
 
-    public static HttpManager getInstance(Context context){
-        if (mInstance == null)
-        {
-            synchronized (HttpManager.class)
-            {
-                if (mInstance == null)
-                {
+    public static HttpManager getInstance(Context context) {
+        if (mInstance == null) {
+            synchronized (HttpManager.class) {
+                if (mInstance == null) {
                     mInstance = new HttpManager(context);
                 }
             }
@@ -99,14 +98,6 @@ public class HttpManager {
 
     public void getInTheatersMovie(Callback<MovieEntity> callback) {
         mApiService.getInTheatersMovie().enqueue(callback);
-    }
-
-    public void getCategoryContent(Callback<String> callback){
-        mApiService.getCategoryContent().enqueue(callback);
-    }
-
-    public void getBookContent(Callback<String> callback){
-        mApiService.getBookContent().enqueue(callback);
     }
 
 }

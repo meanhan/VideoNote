@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by xuhan on 18-7-25.
+ * @author  xuhan on 18-7-25.
  */
 
 public class LocalMediaEntity implements Parcelable {

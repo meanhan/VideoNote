@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * MVPPlugin
+ * @author meanhan
  */
 
 public class ListPresenter extends BasePresenterImpl<ListContract.View> implements ListContract.Presenter {

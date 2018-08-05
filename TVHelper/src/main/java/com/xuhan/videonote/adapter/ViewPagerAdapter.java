@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.List;
 
 /**
+ * @author meanhan
  * 底部导航对应的ViewPager的适配器
  */
 

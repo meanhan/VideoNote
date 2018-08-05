@@ -22,7 +22,7 @@ import com.xuhan.videonote.mvp.MVPBaseFragment;
 import java.util.List;
 
 /**
- * MVPPlugin
+ * @author meanhan
  */
 
 public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresenter> implements HomeContract.View {
@@ -36,6 +36,9 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
 
 
     public interface OnHomeFragmentListener {
+        /**
+         * Fragment点击事件接口
+         */
         void onHomeFragmentClick();
     }
 
@@ -63,7 +66,11 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         mListener = null;
     }
 
-    // 设置 OptionsMenu显示图标
+    /**
+     * 设置 OptionsMenu显示图标
+     * @param menu
+     * @param inflater
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();

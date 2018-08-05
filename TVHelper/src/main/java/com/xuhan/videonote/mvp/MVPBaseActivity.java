@@ -9,7 +9,7 @@ import java.lang.reflect.ParameterizedType;
 
 
 /**
- * MVPPlugin
+ * @author meanhan
  */
 
 public abstract class MVPBaseActivity<V extends BaseView, T extends BasePresenterImpl<V>> extends AppCompatActivity implements BaseView {
@@ -38,6 +38,7 @@ public abstract class MVPBaseActivity<V extends BaseView, T extends BasePresente
         return this;
     }
 
+    @Override
     public int getLayoutId() {
         return 0;
     }

@@ -26,20 +26,25 @@ import com.xuhan.videonote.personalcenter.PersonalCenterFragment;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
+/**
+ * @author meanhan
+ */
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnHomeFragmentListener,
         ListFragment.OnListFragmentListener, DiscoverFragment.OnDiscoverFragmentListener,
         PersonalCenterFragment.OnPersonalFragmentListener, BottomNavigationBar.OnTabSelectedListener {
 
     public static final int REQUEST_CODE_ASK_PERMISSIONS = 100;
     private BottomNavigationBar mNavigationBar;
-    private BadgeItem badgeItem; //添加角标
+    /**
+     *  添加角标
+     */
+    private BadgeItem badgeItem;
     private ArrayList<Fragment> mFragmentList;
     private HomeFragment mHomeFragment;
     private ListFragment mListFragment;
     private DiscoverFragment mDiscoverFragment;
     private PersonalCenterFragment mPersonalFragment;
     private FragmentManager mFragmentManager;
-//    private FragmentTransaction mFragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +61,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
         return true;
     }
 
-    // 设置Menu菜单显示图标
+    /**
+     * 设置Menu菜单显示图标
+      */
     @Override
     public boolean onMenuOpened(int featureId, Menu menu) {
         if (menu != null) {
@@ -128,20 +135,19 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
         mFragmentList.add(mPersonalFragment);
         mFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-//        mFragmentTransaction.add(mHomeFragment,"home");
-//        mFragmentTransaction.add(mListFragment,"list");
-//        mFragmentTransaction.add(mDiscoverFragment,"discover");
-//        mFragmentTransaction.add(mPersonalFragment,"me");
-//        mFragmentTransaction.show(mHomeFragment);
-//        mFragmentTransaction.hide(mListFragment);
-//        mFragmentTransaction.hide(mDiscoverFragment);
-//        mFragmentTransaction.hide(mPersonalFragment);
+//        fragmentTransaction.add(mHomeFragment,"home");
+//        fragmentTransaction.add(mListFragment,"list");
+//        fragmentTransaction.add(mDiscoverFragment,"discover");
+//        fragmentTransaction.add(mPersonalFragment,"me");
+//        fragmentTransaction.show(mHomeFragment);
+//        fragmentTransaction.hide(mListFragment);
+//        fragmentTransaction.hide(mDiscoverFragment);
         fragmentTransaction.replace(R.id.layout_frame, mHomeFragment);
         fragmentTransaction.commit();
     }
 
     private void initNavigationBar() {
-        mNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
+        mNavigationBar =  findViewById(R.id.bottom_navigation_bar);
         mNavigationBar.setTabSelectedListener(this);
         // MODE_FIXED  MODE_SHIFTING
         mNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);

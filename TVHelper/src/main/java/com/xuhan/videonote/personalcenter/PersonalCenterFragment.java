@@ -15,7 +15,7 @@ import com.xuhan.videonote.R;
 import com.xuhan.videonote.mvp.MVPBaseFragment;
 
 /**
- * MVPPlugin
+ * @author meanhan
  */
 
 public class PersonalCenterFragment extends MVPBaseFragment<PersonalCenterContract.View, PersonalCenterPresenter> implements PersonalCenterContract.View {
@@ -31,6 +31,9 @@ public class PersonalCenterFragment extends MVPBaseFragment<PersonalCenterContra
     private OnPersonalFragmentListener mListener;
 
     public interface OnPersonalFragmentListener {
+        /**
+         * 点击事件
+         */
         void onPersonalFragmentClick();
     }
 

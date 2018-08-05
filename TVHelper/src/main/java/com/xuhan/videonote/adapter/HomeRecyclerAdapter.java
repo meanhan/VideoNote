@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by xuhan on 18-3-3.
+ * @author  xuhan on 18-3-3.
  */
 
 public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder> {
@@ -67,8 +67,6 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         MovieEntity.SubjectsEntity subjects = mDataList.get(position);
         holder.cardName.setText(subjects.getTitle());
         holder.cardNumber.setText(subjects.getYear());
-//        int[] images = {R.drawable.image01, R.drawable.image02, R.drawable.image03, R.drawable.image04};
-//        int index = new Random().nextInt(3);
         Glide.with(mContext).load(subjects.getImages().getLarge()).into(holder.cardImage);
     }
 

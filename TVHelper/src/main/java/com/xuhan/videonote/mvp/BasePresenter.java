@@ -1,11 +1,18 @@
 package com.xuhan.videonote.mvp;
 
 /**
- * MVPPlugin
+ * @author
  */
 
-public interface  BasePresenter <V extends BaseView>{
+public interface BasePresenter<V extends BaseView> {
+    /**
+     * 绑定View
+     * @param view
+     */
     void attachView(V view);
 
+    /**
+     * 解绑View
+     */
     void detachView();
 }

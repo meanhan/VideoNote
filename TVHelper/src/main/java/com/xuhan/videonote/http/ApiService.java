@@ -6,17 +6,16 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 /**
- * Created by xuhan on 17-10-30.
+ * @author  xuhan on 17-10-30.
  */
 
-public interface APIService {
+public interface ApiService {
 
+    /**
+     * 获取正在热映电影信息
+     * @return
+     */
     @GET("in_theaters")
     Call<MovieEntity> getInTheatersMovie();
 
-    @GET("categories/contents")
-    Call<String> getCategoryContent();
-
-    @GET("contents/public")
-    Call<String> getBookContent();
 }

@@ -15,7 +15,7 @@ import com.zhl.cbdialog.CBDialogBuilder;
 import java.lang.reflect.ParameterizedType;
 
 /**
- * MVPPlugin
+ * @author meanhan
  */
 
 public abstract class MVPBaseFragment<V extends BaseView, T extends BasePresenterImpl<V>> extends Fragment implements BaseView {
@@ -76,9 +76,12 @@ public abstract class MVPBaseFragment<V extends BaseView, T extends BasePresente
     public void showLoadingDialog() {
         if (mLoadingDialog == null) {
             mLoadingDialog = new CBDialogBuilder(getActivity(), CBDialogBuilder.DIALOG_STYLE_PROGRESS_AVLOADING)
-                    .setTouchOutSideCancelable(true) // 设置是否点击对话框以外的区域dismiss对话框
-                    .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM) // 设置对话框的动画样式
-                    .setDialoglocation(CBDialogBuilder.DIALOG_LOCATION_CENTER)  // 设置对话框位于屏幕的位置
+                    // 设置是否点击对话框以外的区域dismiss对话框
+                    .setTouchOutSideCancelable(true)
+                    // 设置对话框的动画样式
+                    .setDialogAnimation(CBDialogBuilder.DIALOG_ANIM_SLID_BOTTOM)
+                    // 设置对话框位于屏幕的位置
+                    .setDialoglocation(CBDialogBuilder.DIALOG_LOCATION_CENTER)
                     .create();
         }
         mLoadingDialog.show();

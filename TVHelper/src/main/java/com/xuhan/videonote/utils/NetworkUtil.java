@@ -5,17 +5,22 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
- * Created by meanhan on 2017/5/6.
+ * @author meanhan  meanhan on 2017/5/6.
  */
 
 public class NetworkUtil {
-    // 检查是否连接到网络
-    public static boolean networkConnected(Context context){
+    /**
+     * 检查是否连接到网络
+     *
+     * @param context
+     * @return
+     */
+    public static boolean networkConnected(Context context) {
 
-        if(context != null){
+        if (context != null) {
             ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo info = manager.getActiveNetworkInfo();
-            if(info != null){
+            if (info != null) {
                 return info.isAvailable();
             }
         }
@@ -23,14 +28,16 @@ public class NetworkUtil {
         return false;
     }
 
-    // 检查WiFi是否连接
-    public static boolean wifiConnected(Context context){
+    /**
+     * 检查WiFi是否连接
+     */
+    public static boolean wifiConnected(Context context) {
 
-        if(context != null){
+        if (context != null) {
             ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo info = manager.getActiveNetworkInfo();
-            if(info != null){
-                if(info.getType() == ConnectivityManager.TYPE_WIFI){
+            if (info != null) {
+                if (info.getType() == ConnectivityManager.TYPE_WIFI) {
                     return info.isAvailable();
                 }
             }
@@ -39,15 +46,19 @@ public class NetworkUtil {
         return false;
     }
 
+    /**
+     * 检查移动网络是否连接
+     *
+     * @param context
+     * @return
+     */
+    public static boolean mobileDataConnected(Context context) {
 
-    // 检查移动网络是否连接
-    public static boolean mobileDataConnected(Context context){
-
-        if(context != null){
+        if (context != null) {
             ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo info = manager.getActiveNetworkInfo();
-            if(info != null){
-                if(info.getType() == ConnectivityManager.TYPE_MOBILE){
+            if (info != null) {
+                if (info.getType() == ConnectivityManager.TYPE_MOBILE) {
                     return info.isAvailable();
                 }
             }

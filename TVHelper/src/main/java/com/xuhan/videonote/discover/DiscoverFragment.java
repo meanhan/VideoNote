@@ -12,7 +12,7 @@ import com.xuhan.videonote.R;
 import com.xuhan.videonote.mvp.MVPBaseFragment;
 
 /**
- * MVPPlugin
+ * @author meanhan
  */
 
 public class DiscoverFragment extends MVPBaseFragment<DiscoverContract.View, DiscoverPresenter> implements DiscoverContract.View {
@@ -22,6 +22,9 @@ public class DiscoverFragment extends MVPBaseFragment<DiscoverContract.View, Dis
     private OnDiscoverFragmentListener mListener;
 
     public interface OnDiscoverFragmentListener {
+        /**
+         * Fragment点击事件
+         */
         void onDiscoverFragmentClick();
     }
 

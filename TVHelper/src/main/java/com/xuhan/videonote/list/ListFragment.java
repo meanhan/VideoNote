@@ -26,7 +26,7 @@ import com.zhl.cbdialog.pedant.SweetAlert.SweetAlertDialog;
 import java.util.List;
 
 /**
- * MVPPlugin
+ * @author meanhan
  */
 
 public class ListFragment extends MVPBaseFragment<ListContract.View, ListPresenter> implements ListContract.View {
@@ -42,6 +42,9 @@ public class ListFragment extends MVPBaseFragment<ListContract.View, ListPresent
     private Toolbar mToolbar;
 
     public interface OnListFragmentListener {
+        /**
+         * fragment点击事件接口
+         */
         void onListFragmentClick();
     }
 

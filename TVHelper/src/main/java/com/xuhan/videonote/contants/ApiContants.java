@@ -1,7 +1,7 @@
 package com.xuhan.videonote.contants;
 
 /**
- * Created by xuhan on 18-7-31.
+ * @author  xuhan on 18-7-31.
  */
 
 public class ApiContants {

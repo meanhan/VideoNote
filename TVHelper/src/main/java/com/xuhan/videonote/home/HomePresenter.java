@@ -9,7 +9,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * MVPPlugin
+ * @author meanhan
  */
 
 public class HomePresenter extends BasePresenterImpl<HomeContract.View> implements HomeContract.Presenter {

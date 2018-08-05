@@ -5,13 +5,21 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by xuhan on 17-11-1.
+ * @author  xuhan on 17-11-1.
  */
 
 public abstract class HttpCallBack implements Callback<String> {
 
-    public abstract void onSuccess(String s);
+    /**
+     * 请求成功
+     * @param s
+     */
+     abstract void onSuccess(String s);
 
+    /**
+     * 请求失败
+     * @param t
+     */
     public abstract void onFailed(Throwable t);
 
     @Override

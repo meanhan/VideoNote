@@ -1,7 +1,7 @@
 package com.xuhan.videonote.mvp;
 
 /**
- * MVPPlugin
+ * @author meanhan
  */
 
 public class BasePresenterImpl<V extends BaseView> implements BasePresenter<V> {
