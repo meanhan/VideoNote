@@ -32,7 +32,7 @@ import java.util.List;
 public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresenter> implements HomeContract.View {
 
     //    private RecyclerView mRecyclerView;
-//    private HomeRecyclerAdapter mAdapter;
+//    private ListRecyclerAdapter mAdapter;
     private List<MovieEntity.SubjectsEntity> mMovieList = new ArrayList<>();
     private DiscreteScrollView mScrollView;
     private FloatingActionButton mActionButton;
@@ -123,12 +123,6 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         mScrollView.setItemTransformer(new ScaleTransformer.Builder()
                 .setMinScale(0.8f)
                 .build());
-
-//        mRecyclerView = fragmentView.findViewById(R.id.home_recycler_view);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-//        mRecyclerView.setLayoutManager(layoutManager);
-//        mAdapter = new HomeRecyclerAdapter();
-//        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -178,7 +172,5 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     private void refreshView() {
         mScrollAdapter.setData(mMovieList);
         mScrollAdapter.notifyDataSetChanged();
-//        mAdapter.setDataList(mMovieList);
-//        mAdapter.notifyDataSetChanged();
     }
 }

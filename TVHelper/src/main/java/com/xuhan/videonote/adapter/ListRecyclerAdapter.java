@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.xuhan.videonote.R;
-import com.xuhan.videonote.bean.MovieEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,35 +20,38 @@ import java.util.List;
  * @author  xuhan on 18-3-3.
  */
 
-public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder> {
+public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<MovieEntity.SubjectsEntity> mDataList = new ArrayList<>();
+    private List<String> mDataList = new ArrayList<>();
+    private OnItemClickListener mItemClickListener;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         ImageView cardImage;
         TextView cardName;
-        TextView cardNumber;
 
         public ViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView;
             cardImage = itemView.findViewById(R.id.card_image);
             cardName = itemView.findViewById(R.id.card_name);
-            cardNumber = itemView.findViewById(R.id.card_sub);
         }
     }
 
-    public HomeRecyclerAdapter() {
+    public ListRecyclerAdapter() {
     }
 
-    public HomeRecyclerAdapter(List<MovieEntity.SubjectsEntity> dataList) {
+    public ListRecyclerAdapter(List<String> dataList) {
         this.mDataList = dataList;
     }
 
-    public void setDataList(List<MovieEntity.SubjectsEntity> dataList) {
+    public void setDataList(List<String> dataList) {
         this.mDataList = dataList;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener mItemClickListener) {
+        this.mItemClickListener = mItemClickListener;
     }
 
     @NonNull
@@ -58,20 +60,33 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         if (mContext == null) {
             mContext = parent.getContext();
         }
-        View view = LayoutInflater.from(mContext).inflate(R.layout.home_recycler_item, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_recycler_card, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        MovieEntity.SubjectsEntity subjects = mDataList.get(position);
-        holder.cardName.setText(subjects.getTitle());
-        holder.cardNumber.setText(subjects.getYear());
-        Glide.with(mContext).load(subjects.getImages().getLarge()).into(holder.cardImage);
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        holder.cardName.setText(mDataList.get(position));
+        Glide.with(mContext).load(R.drawable.item_recycler_bg).into(holder.cardImage);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mItemClickListener.onItemClick(position);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return mDataList.isEmpty() ? 0 : mDataList.size();
+    }
+
+    public interface OnItemClickListener {
+        /**
+         * item点击事件
+         *
+         * @param position
+         */
+        void onItemClick(int position);
     }
 }
