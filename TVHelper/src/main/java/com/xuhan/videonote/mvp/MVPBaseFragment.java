@@ -28,6 +28,7 @@ public abstract class MVPBaseFragment<V extends BaseView, T extends BasePresente
         super.onCreate(savedInstanceState);
         mPresenter = getInstance(this, 1);
         mPresenter.attachView((V) this);
+//        initData();
     }
 
     @Nullable

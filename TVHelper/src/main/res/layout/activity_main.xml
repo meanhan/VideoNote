@@ -7,6 +7,8 @@
     android:orientation="vertical"
     tools:context="com.xuhan.videonote.activity.MainActivity">
 
+    <include layout="@layout/layout_toolbar" />
+
     <FrameLayout
         android:id="@+id/layout_frame"
         android:layout_width="match_parent"

@@ -5,10 +5,12 @@
     <item
         android:id="@+id/action_order"
         android:title="@string/action_order"
+        android:icon="@drawable/icon_order_gray"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_refresh"
         android:orderInCategory="80"
         android:title="@string/action_refresh"
+        android:icon="@drawable/icon_refresh_gray"
         app:showAsAction="never" />
 </menu>

@@ -57,4 +57,8 @@ dependencies {
     // CBDialog样式库 包含SweetAlertDialog
     implementation 'com.github.yilylong:CBDialog:v1.0.7'
 //    compile 'cn.pedant.sweetalert:library:1.3'
+    // Toolbar上 PopupMenu
+    implementation 'com.github.Yalantis:Context-Menu.Android:1.0.8'
+    // 自定义滑动切换View
+    implementation 'com.yarolegovich:discrete-scrollview:1.4.9'
 }

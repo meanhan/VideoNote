@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -101,7 +102,8 @@ public class ListFragment extends MVPBaseFragment<ListContract.View, ListPresent
                 Toast.makeText(getActivity(), "排序", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_refresh:
-                Toast.makeText(getActivity(), "刷新", Toast.LENGTH_SHORT).show();
+                showLoadingDialog();
+                mPresenter.loadData();
                 break;
             default:
                 break;
@@ -111,26 +113,13 @@ public class ListFragment extends MVPBaseFragment<ListContract.View, ListPresent
 
     @Override
     public void initView() {
-        mToolbar = fragmentView.findViewById(R.id.toolbar);
-        initToolbar();
+        setHasOptionsMenu(true);
         mRecyclerView = fragmentView.findViewById(R.id.recycler_view_list);
         mTextView = fragmentView.findViewById(R.id.tv_no_media);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new VideoListAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
-    }
-
-    private void initToolbar() {
-        setHasOptionsMenu(true);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-        mToolbar.setTitle("本地视频");
-        mToolbar.setTitleTextColor(getActivity().getResources().getColor(R.color.textColorGray));
-        mToolbar.setBackgroundColor(getActivity().getResources().getColor(R.color.colorWhite));
-        // 设置右侧按钮图标
-        mToolbar.setOverflowIcon(getActivity().getDrawable(R.drawable.icon_more_gray));
-        getActivity().getWindow().setStatusBarColor(getActivity().getResources().getColor(R.color.color_transparent));
-
     }
 
     @Override
@@ -154,7 +143,7 @@ public class ListFragment extends MVPBaseFragment<ListContract.View, ListPresent
 
     @Override
     public void loadSuccess(List<LocalMediaEntity> list) {
-        dismissLoadingDialog();
+//        dismissLoadingDialog();
         mediaList = list;
         mTextView.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
@@ -164,6 +153,7 @@ public class ListFragment extends MVPBaseFragment<ListContract.View, ListPresent
 
     @Override
     public void loadFailed(String message) {
+//        dismissLoadingDialog();
         mTextView.setVisibility(View.VISIBLE);
         mRecyclerView.setVisibility(View.GONE);
     }

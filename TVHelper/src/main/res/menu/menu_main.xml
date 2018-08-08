@@ -5,24 +5,24 @@
     <item
         android:id="@+id/action_searcher"
         android:title="@string/action_searcher"
-        android:icon="@drawable/icon_search_white"
+        android:icon="@drawable/icon_search_gray"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_scan"
         android:orderInCategory="80"
         android:title="@string/action_scan"
-        android:icon="@drawable/icon_scan_white"
+        android:icon="@drawable/icon_scan_gray"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_help"
         android:orderInCategory="80"
         android:title="@string/action_help"
-        android:icon="@drawable/icon_help_white"
+        android:icon="@drawable/icon_help_gray"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="80"
         android:title="@string/action_settings"
-        android:icon="@drawable/icon_setting_white"
+        android:icon="@drawable/icon_setting_gray"
         app:showAsAction="never" />
 </menu>

@@ -3,11 +3,10 @@ package com.xuhan.videonote.home;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,10 +14,15 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.xuhan.videonote.R;
-import com.xuhan.videonote.adapter.HomeRecyclerAdapter;
+import com.xuhan.videonote.adapter.DiscreteScrollViewAdapter;
 import com.xuhan.videonote.bean.MovieEntity;
 import com.xuhan.videonote.mvp.MVPBaseFragment;
+import com.yarolegovich.discretescrollview.DSVOrientation;
+import com.yarolegovich.discretescrollview.DiscreteScrollView;
+import com.yarolegovich.discretescrollview.InfiniteScrollAdapter;
+import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,12 +31,14 @@ import java.util.List;
 
 public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresenter> implements HomeContract.View {
 
-    private Toolbar toolbar;
-    private RecyclerView mRecyclerView;
-    private HomeRecyclerAdapter mAdapter;
-    private List<MovieEntity.SubjectsEntity> mMovieList;
+    //    private RecyclerView mRecyclerView;
+//    private HomeRecyclerAdapter mAdapter;
+    private List<MovieEntity.SubjectsEntity> mMovieList = new ArrayList<>();
+    private DiscreteScrollView mScrollView;
     private FloatingActionButton mActionButton;
     private OnHomeFragmentListener mListener;
+    private InfiniteScrollAdapter mInfiniteAdapter;
+    private DiscreteScrollViewAdapter mScrollAdapter;
 
 
     public interface OnHomeFragmentListener {
@@ -106,18 +112,23 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
 
     @Override
     public void initView() {
-        toolbar = fragmentView.findViewById(R.id.toolbar);
         setHasOptionsMenu(true);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-//        toolbar.inflateMenu(R.menu.menu_main);
-        toolbar.setTitle("热映电影");
-        toolbar.setOverflowIcon(getActivity().getDrawable(R.drawable.icon_more_white));
-        mActionButton = fragmentView.findViewById(R.id.fab);
-        mRecyclerView = fragmentView.findViewById(R.id.home_recycler_view);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new HomeRecyclerAdapter();
-        mRecyclerView.setAdapter(mAdapter);
+        mScrollView = fragmentView.findViewById(R.id.item_picker);
+        mActionButton = fragmentView.findViewById(R.id.item_btn_refresh);
+        mScrollView.setOrientation(DSVOrientation.HORIZONTAL);
+        mScrollAdapter = new DiscreteScrollViewAdapter(mMovieList);
+        mInfiniteAdapter = InfiniteScrollAdapter.wrap(mScrollAdapter);
+        mScrollView.setAdapter(mInfiniteAdapter);
+        mScrollView.setItemTransitionTimeMillis(150);
+        mScrollView.setItemTransformer(new ScaleTransformer.Builder()
+                .setMinScale(0.8f)
+                .build());
+
+//        mRecyclerView = fragmentView.findViewById(R.id.home_recycler_view);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+//        mRecyclerView.setLayoutManager(layoutManager);
+//        mAdapter = new HomeRecyclerAdapter();
+//        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -130,7 +141,13 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         mActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "bar", Toast.LENGTH_SHORT).show();
+                mPresenter.loadData();
+            }
+        });
+        mScrollView.addOnItemChangedListener(new DiscreteScrollView.OnItemChangedListener<RecyclerView.ViewHolder>() {
+            @Override
+            public void onCurrentItemChanged(@Nullable RecyclerView.ViewHolder viewHolder, int adapterPosition) {
+
             }
         });
     }
@@ -159,7 +176,9 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     }
 
     private void refreshView() {
-        mAdapter.setDataList(mMovieList);
-        mAdapter.notifyDataSetChanged();
+        mScrollAdapter.setData(mMovieList);
+        mScrollAdapter.notifyDataSetChanged();
+//        mAdapter.setDataList(mMovieList);
+//        mAdapter.notifyDataSetChanged();
     }
 }

@@ -13,8 +13,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.Toast;
+
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -23,6 +26,7 @@ import com.xuhan.videonote.discover.DiscoverFragment;
 import com.xuhan.videonote.home.HomeFragment;
 import com.xuhan.videonote.list.ListFragment;
 import com.xuhan.videonote.personalcenter.PersonalCenterFragment;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
@@ -34,9 +38,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
         PersonalCenterFragment.OnPersonalFragmentListener, BottomNavigationBar.OnTabSelectedListener {
 
     public static final int REQUEST_CODE_ASK_PERMISSIONS = 100;
+    private Toolbar mToolbar;
     private BottomNavigationBar mNavigationBar;
     /**
-     *  添加角标
+     * 添加角标
      */
     private BadgeItem badgeItem;
     private ArrayList<Fragment> mFragmentList;
@@ -45,25 +50,30 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
     private DiscoverFragment mDiscoverFragment;
     private PersonalCenterFragment mPersonalFragment;
     private FragmentManager mFragmentManager;
+    private Fragment mCurrentFragment;
+    private int mCurrentPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        getWindow().setStatusBarColor(getResources().getColor(R.color.color_transparent));
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
         requestPermissions();
         initFragment();
         initNavigationBar();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    protected void onResume() {
+        super.onResume();
+        changeToolbar(mCurrentPosition);
     }
 
     /**
      * 设置Menu菜单显示图标
-      */
+     */
     @Override
     public boolean onMenuOpened(int featureId, Menu menu) {
         if (menu != null) {
@@ -80,8 +90,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
         return super.onMenuOpened(featureId, menu);
     }
 
-    public static boolean checkPermission(final Activity activity, final String permission){
-        if(Build.VERSION.SDK_INT >= 23) {
+    public static boolean checkPermission(final Activity activity, final String permission) {
+        if (Build.VERSION.SDK_INT >= 23) {
             int storagePermission = ActivityCompat.checkSelfPermission(activity, permission);
             if (storagePermission != PackageManager.PERMISSION_GRANTED) {
                 return false;
@@ -91,20 +101,20 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
     }
 
     public static void showPermissionDialog(final Activity activity, String permission) {
-        if (!ActivityCompat.shouldShowRequestPermissionRationale(activity,permission)) {
-            ActivityCompat.requestPermissions(activity, new String[]{permission},REQUEST_CODE_ASK_PERMISSIONS);
+        if (!ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
+            ActivityCompat.requestPermissions(activity, new String[]{permission}, REQUEST_CODE_ASK_PERMISSIONS);
             return;
         }
-        ActivityCompat.requestPermissions(activity,new String[]{permission},REQUEST_CODE_ASK_PERMISSIONS);
+        ActivityCompat.requestPermissions(activity, new String[]{permission}, REQUEST_CODE_ASK_PERMISSIONS);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == REQUEST_CODE_ASK_PERMISSIONS){
-            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(this,"取得权限",Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(this,"未取得权限",Toast.LENGTH_SHORT).show();
+        if (requestCode == REQUEST_CODE_ASK_PERMISSIONS) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "取得权限", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "未取得权限", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -123,6 +133,42 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
         }
     }
 
+    private void changeToolbar(int position) {
+        switch (position) {
+            case 0:
+                mToolbar.setTitle("热映电影");
+                mToolbar.getMenu().clear();
+                mToolbar.inflateMenu(R.menu.menu_main);
+                mToolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
+                mToolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                mToolbar.setOverflowIcon(getDrawable(R.drawable.icon_more_white));
+                break;
+            case 1:
+                mToolbar.setTitle("本地视频");
+                mToolbar.getMenu().clear();
+                mToolbar.inflateMenu(R.menu.menu_list);
+                mToolbar.setTitleTextColor(getResources().getColor(R.color.textColorGray));
+                mToolbar.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                // 设置右侧按钮图标
+                mToolbar.setOverflowIcon(getDrawable(R.drawable.icon_more_gray));
+                break;
+            case 2:
+                mToolbar.setTitle("发现");
+                mToolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
+                mToolbar.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                mToolbar.setOverflowIcon(null);
+                break;
+            case 3:
+                mToolbar.setTitle("个人中心");
+                mToolbar.setTitleTextColor(getResources().getColor(R.color.colorYellow));
+                mToolbar.setBackgroundColor(getResources().getColor(R.color.colorGray));
+                mToolbar.setOverflowIcon(null);
+                break;
+            default:
+                break;
+        }
+    }
+
     private void initFragment() {
         mHomeFragment = HomeFragment.newInstance("", "");
         mListFragment = ListFragment.newInstance("");
@@ -135,19 +181,31 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
         mFragmentList.add(mPersonalFragment);
         mFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-//        fragmentTransaction.add(mHomeFragment,"home");
-//        fragmentTransaction.add(mListFragment,"list");
-//        fragmentTransaction.add(mDiscoverFragment,"discover");
-//        fragmentTransaction.add(mPersonalFragment,"me");
-//        fragmentTransaction.show(mHomeFragment);
-//        fragmentTransaction.hide(mListFragment);
-//        fragmentTransaction.hide(mDiscoverFragment);
-        fragmentTransaction.replace(R.id.layout_frame, mHomeFragment);
+        fragmentTransaction.add(R.id.layout_frame, mHomeFragment, "home");
         fragmentTransaction.commit();
+        mCurrentFragment = mHomeFragment;
+        mCurrentPosition = 0;
+    }
+
+    private void switchFragment(int position) {
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        Fragment fragment = mFragmentList.get(position);
+        if (mCurrentFragment != fragment) {
+            //判断切换的Fragment是否已经添加过
+            if (!fragment.isAdded()) {
+                //如果没有，则先把当前的Fragment隐藏，把切换的Fragment添加上
+                fragmentTransaction.hide(mCurrentFragment)
+                        .add(R.id.layout_frame, fragment).commit();
+            } else {
+                //如果已经添加过，则先把当前的Fragment隐藏，把切换的Fragment显示出来
+                fragmentTransaction.hide(mCurrentFragment).show(fragment).commit();
+            }
+            mCurrentFragment = fragment;
+        }
     }
 
     private void initNavigationBar() {
-        mNavigationBar =  findViewById(R.id.bottom_navigation_bar);
+        mNavigationBar = findViewById(R.id.bottom_navigation_bar);
         mNavigationBar.setTabSelectedListener(this);
         // MODE_FIXED  MODE_SHIFTING
         mNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
@@ -155,22 +213,22 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
         mNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         mNavigationBar.setBarBackgroundColor(R.color.colorWhite);
         mNavigationBar.addItem(new BottomNavigationItem(R.drawable.ic_home_white_24dp, "首页").setActiveColorResource(
-                R.color.colorGreen))
+                R.color.colorPrimary))
                 .addItem(new BottomNavigationItem(R.drawable.ic_book_white_24dp, "列表").setActiveColorResource(
-                        R.color.colorPrimary))
+                        R.color.colorGreen))
                 .addItem(new BottomNavigationItem(R.drawable.ic_find_replace_white_24dp, "发现").setActiveColorResource(
                         R.color.colorAccent))
                 .addItem(new BottomNavigationItem(R.drawable.ic_favorite_white_24dp, "我的").setActiveColorResource(
-                        R.color.colorRed))
+                        R.color.colorGray))
                 .setFirstSelectedPosition(0)
                 .initialise();
     }
 
     @Override
     public void onTabSelected(int position) {
-        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.layout_frame, mFragmentList.get(position));
-        fragmentTransaction.commit();
+        mCurrentPosition = position;
+        changeToolbar(position);
+        switchFragment(position);
     }
 
     @Override
