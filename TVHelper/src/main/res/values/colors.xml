@@ -12,4 +12,10 @@
     <color name="colorYellow">#1AFA29</color>
     <color name="colorGray">#515151</color>
     <color name="colorGrayLight">#E6E6E6</color>
+
+    <array name="gradient">
+        <item>@color/colorGrayLight</item>
+        <item>@color/colorAccent</item>
+        <item>@color/colorPrimary</item>
+    </array>
 </resources>

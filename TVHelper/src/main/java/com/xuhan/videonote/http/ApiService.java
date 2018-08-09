@@ -19,7 +19,7 @@ public interface ApiService {
     Call<MovieEntity> getInTheatersMovies();
 
     /**
-     * 获取即将上映电影信息 获取正在热映电影信息
+     * 获取即将上映电影信息
      *
      * @return
      */

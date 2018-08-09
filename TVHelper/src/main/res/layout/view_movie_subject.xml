@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="80dp" />
+
+    <ImageView
+        android:id="@+id/subject_image"
+        android:layout_width="270dp"
+        android:layout_height="385dp"
+        android:scaleType="fitXY"
+        android:layout_gravity="center" />
+
+
+    <TextView
+        android:id="@+id/subject_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal" />
+
+
+    <TextView
+        android:id="@+id/subject_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/colorWhite"
+        android:textSize="15sp"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center_horizontal" />
+
+</merge>

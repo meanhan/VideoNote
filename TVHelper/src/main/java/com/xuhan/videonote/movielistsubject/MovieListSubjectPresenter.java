@@ -1,4 +1,4 @@
-package com.xuhan.videonote.home;
+package com.xuhan.videonote.movielistsubject;
 
 import com.xuhan.videonote.entity.MovieEntity;
 import com.xuhan.videonote.http.HttpManager;
@@ -9,15 +9,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * @author meanhan
+ * @author xuhan
  */
 
-public class HomePresenter extends BasePresenterImpl<HomeContract.View> implements HomeContract.Presenter {
+public class MovieListSubjectPresenter extends BasePresenterImpl<MovieListSubjectContract.View> implements MovieListSubjectContract.Presenter {
 
     @Override
     public void loadData() {
         mView.startLoad();
-        HttpManager.getInstance(mView.getContext()).getInTheatersMovies(new Callback<MovieEntity>() {
+        HttpManager.getInstance(mView.getContext()).getComingSoonMovies(new Callback<MovieEntity>() {
             @Override
             public void onResponse(Call<MovieEntity> call, Response<MovieEntity> response) {
                 mView.endLoad();

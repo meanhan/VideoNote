@@ -31,6 +31,7 @@
             android:name=".player.PlayerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/PlayerTheme" />
+        <activity android:name=".movielistsubject.MovieListSubjectActivity" />
     </application>
 
 </manifest>

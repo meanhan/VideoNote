@@ -96,8 +96,32 @@ public class HttpManager {
         return mInstance;
     }
 
-    public void getInTheatersMovie(Callback<MovieEntity> callback) {
+    /**
+     * 获取正在热映
+     *
+     * @param callback
+     */
+    public void getInTheatersMovies(Callback<MovieEntity> callback) {
         mApiService.getInTheatersMovies().enqueue(callback);
     }
+
+    /**
+     * 获取即将上映
+     *
+     * @param callback
+     */
+    public void getComingSoonMovies(Callback<MovieEntity> callback) {
+        mApiService.getInTheatersMovies().enqueue(callback);
+    }
+
+    /**
+     * 获取Top250
+     *
+     * @param callback
+     */
+    public void getTopMovies(Callback<MovieEntity> callback) {
+        mApiService.getInTheatersMovies().enqueue(callback);
+    }
+
 
 }
