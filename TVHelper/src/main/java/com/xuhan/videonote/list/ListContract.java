@@ -1,6 +1,6 @@
 package com.xuhan.videonote.list;
 
-import com.xuhan.videonote.bean.LocalMediaEntity;
+import com.xuhan.videonote.entity.LocalMediaEntity;
 import com.xuhan.videonote.mvp.BasePresenter;
 import com.xuhan.videonote.mvp.BaseView;
 

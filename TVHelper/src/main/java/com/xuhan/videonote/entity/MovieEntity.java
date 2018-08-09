@@ -1,4 +1,4 @@
-package com.xuhan.videonote.bean;
+package com.xuhan.videonote.entity;
 
 import java.util.List;
 

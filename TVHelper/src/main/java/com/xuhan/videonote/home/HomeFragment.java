@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,7 +15,7 @@ import android.widget.Toast;
 
 import com.xuhan.videonote.R;
 import com.xuhan.videonote.adapter.DiscreteScrollViewAdapter;
-import com.xuhan.videonote.bean.MovieEntity;
+import com.xuhan.videonote.entity.MovieEntity;
 import com.xuhan.videonote.mvp.MVPBaseFragment;
 import com.yarolegovich.discretescrollview.DSVOrientation;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
@@ -151,6 +150,12 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                 changeNameView(mMovieList.get(positionInDataSet));
             }
         });
+        mScrollAdapter.setClickListener(new DiscreteScrollViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                showDetailDialog(mMovieList.get(position));
+            }
+        });
     }
 
     @Override
@@ -184,5 +189,14 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     private void changeNameView(MovieEntity.SubjectsEntity subject) {
         mNameTv.setText(subject.getOriginal_title());
         mRatingTv.setText(getString(R.string.rating, String.valueOf(subject.getRating().getAverage())));
+    }
+
+    /**
+     * 显示电影详情
+     *
+     * @param subject
+     */
+    private void showDetailDialog(MovieEntity.SubjectsEntity subject) {
+        Toast.makeText(getActivity(), subject.getOriginal_title(), Toast.LENGTH_SHORT).show();
     }
 }

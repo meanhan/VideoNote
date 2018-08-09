@@ -7,7 +7,7 @@ import android.view.KeyEvent;
 
 import com.dl7.player.media.IjkPlayerView;
 import com.xuhan.videonote.R;
-import com.xuhan.videonote.bean.LocalMediaEntity;
+import com.xuhan.videonote.entity.LocalMediaEntity;
 
 /**
  * @author meanhan

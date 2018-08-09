@@ -5,11 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.xuhan.videonote.R;
-import com.xuhan.videonote.bean.MovieEntity;
+import com.xuhan.videonote.entity.MovieEntity;
 
 import java.util.List;
 
@@ -20,6 +19,7 @@ import java.util.List;
 public class DiscreteScrollViewAdapter extends RecyclerView.Adapter<DiscreteScrollViewAdapter.ViewHolder> {
 
     private List<MovieEntity.SubjectsEntity> data;
+    private OnItemClickListener mListener;
 
     public DiscreteScrollViewAdapter(List<MovieEntity.SubjectsEntity> data) {
         this.data = data;
@@ -27,6 +27,14 @@ public class DiscreteScrollViewAdapter extends RecyclerView.Adapter<DiscreteScro
 
     public void setData(List<MovieEntity.SubjectsEntity> data) {
         this.data = data;
+    }
+
+    public void setClickListener(OnItemClickListener listener) {
+        this.mListener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
     }
 
     @Override
@@ -37,11 +45,17 @@ public class DiscreteScrollViewAdapter extends RecyclerView.Adapter<DiscreteScro
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         MovieEntity.SubjectsEntity subjects = data.get(position);
         Glide.with(holder.itemView.getContext())
                 .load(subjects.getImages().getLarge())
                 .into(holder.image);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onItemClick(position);
+            }
+        });
     }
 
     @Override

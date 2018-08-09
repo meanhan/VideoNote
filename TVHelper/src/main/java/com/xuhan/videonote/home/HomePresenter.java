@@ -1,6 +1,6 @@
 package com.xuhan.videonote.home;
 
-import com.xuhan.videonote.bean.MovieEntity;
+import com.xuhan.videonote.entity.MovieEntity;
 import com.xuhan.videonote.http.HttpManager;
 import com.xuhan.videonote.mvp.BasePresenterImpl;
 

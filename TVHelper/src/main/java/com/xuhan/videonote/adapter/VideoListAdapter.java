@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.xuhan.videonote.R;
-import com.xuhan.videonote.bean.LocalMediaEntity;
+import com.xuhan.videonote.entity.LocalMediaEntity;
 
 import java.util.List;
 

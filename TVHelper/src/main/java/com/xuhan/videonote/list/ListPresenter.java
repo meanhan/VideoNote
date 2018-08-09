@@ -4,7 +4,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-import com.xuhan.videonote.bean.LocalMediaEntity;
+import com.xuhan.videonote.entity.LocalMediaEntity;
 import com.xuhan.videonote.mvp.BasePresenterImpl;
 
 import java.util.ArrayList;

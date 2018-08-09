@@ -2,7 +2,7 @@ package com.xuhan.videonote.http;
 
 import android.content.Context;
 
-import com.xuhan.videonote.bean.MovieEntity;
+import com.xuhan.videonote.entity.MovieEntity;
 import com.xuhan.videonote.contants.ApiContants;
 import com.xuhan.videonote.utils.NetworkUtil;
 
@@ -97,7 +97,7 @@ public class HttpManager {
     }
 
     public void getInTheatersMovie(Callback<MovieEntity> callback) {
-        mApiService.getInTheatersMovie().enqueue(callback);
+        mApiService.getInTheatersMovies().enqueue(callback);
     }
 
 }
