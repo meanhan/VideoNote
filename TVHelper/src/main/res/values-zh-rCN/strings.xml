@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">追剧助手</string>
     <string name="action_searcher">搜索</string>
     <string name="action_share">分享</string>
@@ -13,6 +13,9 @@
     <string name="find">发现</string>
     <string name="my">我的</string>
     <string name="moment">朋友圈</string>
+    <string name="rating">
+        评分：<xliff:g id="name">%1$s</xliff:g>
+    </string>
 
     <string name="no_video">没有视频</string>
 </resources>

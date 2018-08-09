@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xuhan.videonote.R;
@@ -34,6 +35,8 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     //    private RecyclerView mRecyclerView;
 //    private ListRecyclerAdapter mAdapter;
     private List<MovieEntity.SubjectsEntity> mMovieList = new ArrayList<>();
+    private TextView mNameTv;
+    private TextView mRatingTv;
     private DiscreteScrollView mScrollView;
     private FloatingActionButton mActionButton;
     private OnHomeFragmentListener mListener;
@@ -74,6 +77,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
 
     /**
      * 设置 OptionsMenu显示图标
+     *
      * @param menu
      * @param inflater
      */
@@ -113,6 +117,8 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     @Override
     public void initView() {
         setHasOptionsMenu(true);
+        mNameTv = fragmentView.findViewById(R.id.item_name);
+        mRatingTv = fragmentView.findViewById(R.id.item_rating);
         mScrollView = fragmentView.findViewById(R.id.item_picker);
         mActionButton = fragmentView.findViewById(R.id.item_btn_refresh);
         mScrollView.setOrientation(DSVOrientation.HORIZONTAL);
@@ -141,7 +147,8 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         mScrollView.addOnItemChangedListener(new DiscreteScrollView.OnItemChangedListener<RecyclerView.ViewHolder>() {
             @Override
             public void onCurrentItemChanged(@Nullable RecyclerView.ViewHolder viewHolder, int adapterPosition) {
-
+                int positionInDataSet = mInfiniteAdapter.getRealPosition(adapterPosition);
+                changeNameView(mMovieList.get(positionInDataSet));
             }
         });
     }
@@ -172,5 +179,10 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     private void refreshView() {
         mScrollAdapter.setData(mMovieList);
         mScrollAdapter.notifyDataSetChanged();
+    }
+
+    private void changeNameView(MovieEntity.SubjectsEntity subject) {
+        mNameTv.setText(subject.getOriginal_title());
+        mRatingTv.setText(getString(R.string.rating, String.valueOf(subject.getRating().getAverage())));
     }
 }
