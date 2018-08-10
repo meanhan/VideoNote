@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
     private FragmentManager mFragmentManager;
     private Fragment mCurrentFragment;
     private int mCurrentPosition;
+    private long mExitTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,19 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
     protected void onResume() {
         super.onResume();
         changeToolbar(mCurrentPosition);
+    }
+
+    /**
+     * 连续点击两次返回建退出程序
+     */
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - mExitTime > 2000) {
+            mExitTime = System.currentTimeMillis();
+            Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
+        } else {
+            finish();
+        }
     }
 
     /**
