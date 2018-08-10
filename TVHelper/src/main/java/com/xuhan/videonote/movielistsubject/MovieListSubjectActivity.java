@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.xuhan.videonote.R;
 import com.xuhan.videonote.adapter.MovieSubjectAdapter;
+import com.xuhan.videonote.contants.Contants;
 import com.xuhan.videonote.entity.MovieEntity;
 import com.xuhan.videonote.mvp.MVPBaseActivity;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
@@ -42,7 +43,6 @@ public class MovieListSubjectActivity extends
 
     @Override
     public void initView() {
-        // merge
         mBtnBack = findViewById(R.id.btn_back);
         mMovieView = findViewById(R.id.forecast_view);
         mMoviePicker = findViewById(R.id.forecast_city_picker);
@@ -57,7 +57,14 @@ public class MovieListSubjectActivity extends
 
     @Override
     public void initData() {
-        mPresenter.loadData();
+        String type = getIntent().getStringExtra(Contants.INTENT_MOVIE_LIST_TYPE);
+        if ("正在热映".equals(type)) {
+            mPresenter.loadInTheatersMovies();
+        } else if ("即将上映".equals(type)) {
+            mPresenter.loadComingSoonMovies();
+        } else if ("Top250".equals(type)) {
+            mPresenter.loadTopMovies();
+        }
     }
 
     @Override

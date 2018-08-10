@@ -39,8 +39,18 @@ public class MovieListSubjectContract {
 
     interface Presenter extends BasePresenter<View> {
         /**
-         * 加载数据
+         * 加载正在热映
          */
-        void loadData();
+        void loadInTheatersMovies();
+
+        /**
+         * 加载即将上映
+         */
+        void loadComingSoonMovies();
+
+        /**
+         * 加载Top250
+         */
+        void loadTopMovies();
     }
 }

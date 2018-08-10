@@ -111,7 +111,7 @@ public class HttpManager {
      * @param callback
      */
     public void getComingSoonMovies(Callback<MovieEntity> callback) {
-        mApiService.getInTheatersMovies().enqueue(callback);
+        mApiService.getComingSoonMovies().enqueue(callback);
     }
 
     /**
@@ -120,7 +120,7 @@ public class HttpManager {
      * @param callback
      */
     public void getTopMovies(Callback<MovieEntity> callback) {
-        mApiService.getInTheatersMovies().enqueue(callback);
+        mApiService.getTopMovies().enqueue(callback);
     }
 
 

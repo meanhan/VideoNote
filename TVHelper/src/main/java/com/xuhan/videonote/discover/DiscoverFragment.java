@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.xuhan.videonote.R;
 import com.xuhan.videonote.adapter.ListRecyclerAdapter;
+import com.xuhan.videonote.contants.Contants;
 import com.xuhan.videonote.movielistsubject.MovieListSubjectActivity;
 import com.xuhan.videonote.mvp.MVPBaseFragment;
 
@@ -111,9 +112,13 @@ public class DiscoverFragment extends MVPBaseFragment<DiscoverContract.View, Dis
         mAdapter.setOnItemClickListener(new ListRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-//                Toast.makeText(getActivity(), mDataList.get(position), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), MovieListSubjectActivity.class);
-                startActivity(intent);
+                if (position < 3) {
+                    Intent intent = new Intent(getActivity(), MovieListSubjectActivity.class);
+                    intent.putExtra(Contants.INTENT_MOVIE_LIST_TYPE, mDataList.get(position));
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getActivity(), mDataList.get(position), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
