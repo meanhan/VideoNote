@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -29,6 +30,7 @@ import com.xuhan.videonote.personalcenter.PersonalCenterFragment;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author meanhan
@@ -38,6 +40,12 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
         PersonalCenterFragment.OnPersonalFragmentListener, BottomNavigationBar.OnTabSelectedListener {
 
     public static final int REQUEST_CODE_ASK_PERMISSIONS = 100;
+    private String[] needPermissions = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA,
+            Manifest.permission.VIBRATE,
+    };
     private Toolbar mToolbar;
     private BottomNavigationBar mNavigationBar;
     /**
@@ -104,22 +112,31 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
         return super.onMenuOpened(featureId, menu);
     }
 
-    public static boolean checkPermission(final Activity activity, final String permission) {
-        if (Build.VERSION.SDK_INT >= 23) {
-            int storagePermission = ActivityCompat.checkSelfPermission(activity, permission);
-            if (storagePermission != PackageManager.PERMISSION_GRANTED) {
-                return false;
-            }
+    private boolean checkPermission(String... permissions) {
+        List<String> needRequestPermissionList = findDeniedPermissions(permissions);
+        if (null != needRequestPermissionList
+                && needRequestPermissionList.size() > 0) {
+            return false;
+        } else {
+            return true;
         }
-        return true;
     }
 
-    public static void showPermissionDialog(final Activity activity, String permission) {
-        if (!ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
-            ActivityCompat.requestPermissions(activity, new String[]{permission}, REQUEST_CODE_ASK_PERMISSIONS);
-            return;
+    private List<String> findDeniedPermissions(String[] permissions) {
+        List<String> needRequestPermissionList = new ArrayList<>();
+        for (String perm : permissions) {
+            if (ContextCompat.checkSelfPermission(this,
+                    perm) != PackageManager.PERMISSION_GRANTED
+                    || ActivityCompat.shouldShowRequestPermissionRationale(
+                    this, perm)) {
+                needRequestPermissionList.add(perm);
+            }
         }
-        ActivityCompat.requestPermissions(activity, new String[]{permission}, REQUEST_CODE_ASK_PERMISSIONS);
+        return needRequestPermissionList;
+    }
+
+    private void showPermissionDialog(final Activity activity, String[] permissions) {
+        ActivityCompat.requestPermissions(activity, permissions, REQUEST_CODE_ASK_PERMISSIONS);
     }
 
     @Override
@@ -134,16 +151,18 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnHo
     }
 
     private void requestPermissions() {
-        if (!checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            new AlertDialog.Builder(this)
-                    .setMessage("为了正常读取视频,需要授权.")
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            showPermissionDialog(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-                        }
-                    })
-                    .show();
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (!checkPermission(needPermissions)) {
+                new AlertDialog.Builder(this)
+                        .setMessage("为了正常使用,需要授权.")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                showPermissionDialog(MainActivity.this, needPermissions);
+                            }
+                        })
+                        .show();
+            }
         }
     }
 

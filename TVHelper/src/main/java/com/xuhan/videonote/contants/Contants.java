@@ -7,4 +7,6 @@ package com.xuhan.videonote.contants;
 public class Contants {
 
     public static final String INTENT_MOVIE_LIST_TYPE = "movie_list_type";
+    public static int REQUEST_CODE_SCANNER = 0x10;
+
 }

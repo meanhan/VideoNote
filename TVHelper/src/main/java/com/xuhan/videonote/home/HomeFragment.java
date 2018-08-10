@@ -2,6 +2,7 @@ package com.xuhan.videonote.home;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -15,7 +16,9 @@ import android.widget.Toast;
 
 import com.xuhan.videonote.R;
 import com.xuhan.videonote.adapter.DiscreteScrollViewAdapter;
+import com.xuhan.videonote.contants.Contants;
 import com.xuhan.videonote.entity.MovieEntity;
+import com.xuhan.videonote.google.zxing.activity.CaptureActivity;
 import com.xuhan.videonote.mvp.MVPBaseFragment;
 import com.yarolegovich.discretescrollview.DSVOrientation;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
@@ -24,6 +27,8 @@ import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * @author meanhan
@@ -94,7 +99,8 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                 Toast.makeText(getActivity(), "搜索", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_scan:
-                Toast.makeText(getActivity(), "扫一扫", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                startActivityForResult(intent, Contants.REQUEST_CODE_SCANNER);
                 break;
             case R.id.action_help:
                 Toast.makeText(getActivity(), "帮助", Toast.LENGTH_SHORT).show();
@@ -106,6 +112,17 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Contants.REQUEST_CODE_SCANNER &&
+                resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            String scanResult = bundle.getString("qr_scan_result");
+            Toast.makeText(getActivity(), "Scan:" + scanResult, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
