@@ -39,6 +39,11 @@ import java.util.ArrayList;
 
 public class MomentsActivity extends AppCompatActivity {
 
+    /**
+     * boxing选择器可选照片数量,默认为9张
+     */
+    private static final int BOXING_PICKER_MAX_COUNT = 12;
+
     private AppBarLayout mAppBarLayout;
     private Toolbar mToolbar;
     private CollapsingToolbarLayout mCollapsingToolbar;
@@ -195,7 +200,7 @@ public class MomentsActivity extends AppCompatActivity {
      */
     private void openBoxingPicker() {
         BoxingConfig config = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG)
-                .needCamera(R.drawable.ic_boxing_camera_white).needGif();
+                .needCamera(R.drawable.ic_boxing_camera_white).needGif().withMaxCount(BOXING_PICKER_MAX_COUNT);
         Boxing.of(config)
                 .withIntent(this, BoxingActivity.class)
                 .start(this, Contants.REQUEST_BOXING_PICKER);
