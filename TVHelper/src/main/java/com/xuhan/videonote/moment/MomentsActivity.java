@@ -11,16 +11,26 @@ import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bilibili.boxing.Boxing;
+import com.bilibili.boxing.model.config.BoxingConfig;
+import com.bilibili.boxing.model.entity.BaseMedia;
+import com.bilibili.boxing_impl.ui.BoxingActivity;
 import com.bumptech.glide.Glide;
 import com.xuhan.videonote.R;
+import com.xuhan.videonote.adapter.MomentRecyclerAdapter;
 import com.xuhan.videonote.contants.Contants;
 import com.zhl.cbdialog.CBDialogBuilder;
+
+import java.util.ArrayList;
 
 /**
  * @author meanhan
@@ -34,6 +44,7 @@ public class MomentsActivity extends AppCompatActivity {
     private CollapsingToolbarLayout mCollapsingToolbar;
     private ImageView mToolbarBg;
     private RecyclerView mRecyclerView;
+    private MomentRecyclerAdapter mAdapter;
     private Uri takePhotoUri;
 
     @Override
@@ -50,6 +61,21 @@ public class MomentsActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.clear();
+        getMenuInflater().inflate(R.menu.menu_camera_white, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_moment) {
+            openBoxingPicker();
+        }
+        return true;
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == Contants.REQUEST_TAKE_PHOTO) {
@@ -58,6 +84,10 @@ public class MomentsActivity extends AppCompatActivity {
             } else if (requestCode == Contants.REQUEST_SELECT_PHOTO) {
                 Uri imageUri = data.getData();
                 Glide.with(this).load(imageUri).into(mToolbarBg);
+            } else if (requestCode == Contants.REQUEST_BOXING_PICKER) {
+                ArrayList<BaseMedia> medias = Boxing.getResult(data);
+                mAdapter.setDataList(medias);
+                Toast.makeText(this, medias.size() + "", Toast.LENGTH_SHORT).show();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -68,6 +98,10 @@ public class MomentsActivity extends AppCompatActivity {
 //        mCollapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.textColorGray));
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mAdapter = new MomentRecyclerAdapter();
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void initListener() {
@@ -91,11 +125,15 @@ public class MomentsActivity extends AppCompatActivity {
                     //展开状态
                     mToolbar.setTitle("");
                     mToolbar.setNavigationIcon(R.drawable.icon_back_white);
+                    mToolbar.getMenu().clear();
+                    mToolbar.inflateMenu(R.menu.menu_camera_white);
                 } else if (state == State.COLLAPSED) {
                     //折叠状态
                     mToolbar.setTitleTextColor(getResources().getColor(R.color.textColorGray));
                     mToolbar.setTitle(getString(R.string.moment));
                     mToolbar.setNavigationIcon(R.drawable.icon_back_gray);
+                    mToolbar.getMenu().clear();
+                    mToolbar.inflateMenu(R.menu.menu_camera_gray);
                 } else {
                     //中间状态
 
@@ -150,5 +188,16 @@ public class MomentsActivity extends AppCompatActivity {
         intent.setAction(Intent.ACTION_PICK);
         intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, Contants.REQUEST_SELECT_PHOTO);
+    }
+
+    /**
+     * 跳转至boxing选择器
+     */
+    private void openBoxingPicker() {
+        BoxingConfig config = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG)
+                .needCamera(R.drawable.ic_boxing_camera_white).needGif();
+        Boxing.of(config)
+                .withIntent(this, BoxingActivity.class)
+                .start(this, Contants.REQUEST_BOXING_PICKER);
     }
 }

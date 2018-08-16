@@ -10,5 +10,6 @@ public class Contants {
     public static int REQUEST_CODE_SCANNER = 0x10;
     public static int REQUEST_TAKE_PHOTO = 0x11;
     public static int REQUEST_SELECT_PHOTO = 0x12;
+    public static int REQUEST_BOXING_PICKER = 0x13;
 
 }
