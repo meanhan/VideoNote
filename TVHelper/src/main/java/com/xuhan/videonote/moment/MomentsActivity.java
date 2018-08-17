@@ -17,7 +17,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bilibili.boxing.Boxing;
@@ -48,6 +51,7 @@ public class MomentsActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private CollapsingToolbarLayout mCollapsingToolbar;
     private ImageView mToolbarBg;
+    private TextView mTextMoment;
     private RecyclerView mRecyclerView;
     private MomentRecyclerAdapter mAdapter;
     private Uri takePhotoUri;
@@ -61,6 +65,7 @@ public class MomentsActivity extends AppCompatActivity {
         mCollapsingToolbar = findViewById(R.id.me_collapsing_toolbar);
         mToolbarBg = findViewById(R.id.me_toolbar_bg);
         mRecyclerView = findViewById(R.id.setting_recycler_view);
+        mTextMoment = findViewById(R.id.text_moment);
         initView();
         initListener();
     }
@@ -139,9 +144,13 @@ public class MomentsActivity extends AppCompatActivity {
                     mToolbar.setNavigationIcon(R.drawable.icon_back_gray);
                     mToolbar.getMenu().clear();
                     mToolbar.inflateMenu(R.menu.menu_camera_gray);
+
+                    mTextMoment.setVisibility(View.VISIBLE);
                 } else {
                     //中间状态
-
+                    if (mTextMoment.getVisibility() == View.VISIBLE) {
+                        mTextMoment.setVisibility(View.GONE);
+                    }
                 }
 
             }

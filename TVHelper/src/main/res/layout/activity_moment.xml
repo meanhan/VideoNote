@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="@color/colorGrayLight"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
             app:titleEnabled="false">
 
             <ImageView
@@ -41,12 +41,13 @@
                 android:id="@+id/me_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:paddingStart="5dp"
                 android:paddingEnd="10dp"
+                android:paddingStart="0dp"
                 app:contentInsetLeft="0dp"
                 app:contentInsetStart="0dp"
                 app:contentInsetStartWithNavigation="0dp"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed" />
 
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -60,12 +61,31 @@
         app:layout_anchor="@id/me_appBar"
         app:layout_anchorGravity="end|bottom|right" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/setting_recycler_view"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    </android.support.v7.widget.RecyclerView>
+        <TextView
+            android:id="@+id/text_moment"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:text="@string/moment"
+            android:textColor="@color/textColorGray"
+            android:gravity="center_vertical"
+            android:textSize="12sp"
+            android:paddingStart="10dp"
+            android:visibility="gone"
+            android:background="@color/colorGrayLight" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/setting_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>
