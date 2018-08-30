@@ -37,7 +37,7 @@ import static android.app.Activity.RESULT_OK;
 public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresenter> implements HomeContract.View {
 
     //    private RecyclerView mRecyclerView;
-//    private ListRecyclerAdapter mAdapter;
+//    private DiscoverRecyclerAdapter mAdapter;
     private List<MovieEntity.SubjectsEntity> mMovieList = new ArrayList<>();
     private TextView mNameTv;
     private TextView mRatingTv;

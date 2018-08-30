@@ -2,7 +2,6 @@ package com.xuhan.videonote.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,29 +19,27 @@ import java.util.List;
  * @author  xuhan on 18-3-3.
  */
 
-public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapter.ViewHolder> {
+public class DiscoverRecyclerAdapter extends RecyclerView.Adapter<DiscoverRecyclerAdapter.ViewHolder> {
 
     private Context mContext;
     private List<String> mDataList = new ArrayList<>();
     private OnItemClickListener mItemClickListener;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        CardView cardView;
-        ImageView cardImage;
-        TextView cardName;
+        ImageView itemImage;
+        TextView itemName;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            cardView = (CardView) itemView;
-            cardImage = itemView.findViewById(R.id.card_image);
-            cardName = itemView.findViewById(R.id.card_name);
+            itemImage = itemView.findViewById(R.id.item_icon);
+            itemName = itemView.findViewById(R.id.item_text);
         }
     }
 
-    public ListRecyclerAdapter() {
+    public DiscoverRecyclerAdapter() {
     }
 
-    public ListRecyclerAdapter(List<String> dataList) {
+    public DiscoverRecyclerAdapter(List<String> dataList) {
         this.mDataList = dataList;
     }
 
@@ -60,14 +57,14 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         if (mContext == null) {
             mContext = parent.getContext();
         }
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_recycler_card, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_recycler_discover, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.cardName.setText(mDataList.get(position));
-        Glide.with(mContext).load(R.drawable.item_recycler_bg).into(holder.cardImage);
+        holder.itemName.setText(mDataList.get(position));
+        Glide.with(mContext).load(R.drawable.icon_movie).into(holder.itemImage);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
