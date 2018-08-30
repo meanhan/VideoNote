@@ -38,7 +38,6 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/PlayerTheme" />
         <activity android:name=".movielistsubject.MovieListSubjectActivity" />
-        <activity android:name=".activity.ScanActivity"></activity>
         <activity
             android:name=".google.zxing.activity.CaptureActivity"
             android:theme="@style/AppTheme.NoActionBar" />
