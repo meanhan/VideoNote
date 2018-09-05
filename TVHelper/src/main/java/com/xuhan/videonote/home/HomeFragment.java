@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xuhan.videonote.R;
+import com.xuhan.videonote.activity.SettingActivity;
 import com.xuhan.videonote.adapter.DiscreteScrollViewAdapter;
 import com.xuhan.videonote.contants.Contants;
 import com.xuhan.videonote.entity.MovieEntity;
@@ -94,19 +95,21 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        Intent intent = new Intent();
         switch (id) {
             case R.id.action_searcher:
                 Toast.makeText(getActivity(), "搜索", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_scan:
-                Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                intent.setClass(getActivity(), CaptureActivity.class);
                 startActivityForResult(intent, Contants.REQUEST_CODE_SCANNER);
                 break;
             case R.id.action_help:
                 Toast.makeText(getActivity(), "帮助", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_settings:
-                Toast.makeText(getActivity(), "设置", Toast.LENGTH_SHORT).show();
+                intent.setClass(getActivity(), SettingActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;

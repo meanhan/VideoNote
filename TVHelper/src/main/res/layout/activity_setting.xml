@@ -5,5 +5,18 @@
     android:background="@color/colorGrayLight"
     android:fitsSystemWindows="true">
 
+    <include layout="@layout/layout_toolbar" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/mRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_moment_layout"
+        android:layout_marginTop="22dp"
+        android:background="@color/colorWhite"
+        android:overScrollMode="never"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>
