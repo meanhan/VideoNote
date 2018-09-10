@@ -29,10 +29,8 @@ public class HttpManager {
     private static HttpManager mInstance;
     private final Retrofit mRetrofit;
     private final ApiService mApiService;
-    private Context mContext;
 
-    private HttpManager(Context context) {
-        mContext = context;
+    private HttpManager(final Context context) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
@@ -41,14 +39,14 @@ public class HttpManager {
                 cacheBuilder.maxAge(0, TimeUnit.SECONDS);
                 cacheBuilder.maxStale(365, TimeUnit.DAYS);
                 CacheControl cacheControl = cacheBuilder.build();
-                if (!NetworkUtil.networkConnected(mContext)) {
+                if (!NetworkUtil.networkConnected(context)) {
                     request = request.newBuilder()
                             .cacheControl(cacheControl)
                             .build();
                 }
 
                 Response response = chain.proceed(request);
-                if (NetworkUtil.networkConnected(mContext)) {
+                if (NetworkUtil.networkConnected(context)) {
                     // 有网络时 设置缓存超时时间0个小时
                     int maxAge = 0;
                     return response.newBuilder()
@@ -67,7 +65,7 @@ public class HttpManager {
             }
         };
         //设置缓存路径
-        File httpCacheDirectory = new File(mContext.getApplicationContext().getCacheDir(), "responses");
+        File httpCacheDirectory = new File(context.getApplicationContext().getCacheDir(), "responses");
         //设置缓存 10M
         Cache cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
         //创建OkHttpClient，并添加拦截器和缓存代码
@@ -89,7 +87,7 @@ public class HttpManager {
         if (mInstance == null) {
             synchronized (HttpManager.class) {
                 if (mInstance == null) {
-                    mInstance = new HttpManager(context);
+                    mInstance = new HttpManager(context.getApplicationContext());
                 }
             }
         }
