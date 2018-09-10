@@ -17,7 +17,7 @@ public class MovieListSubjectPresenter extends BasePresenterImpl<MovieListSubjec
     @Override
     public void loadInTheatersMovies() {
         mView.startLoad();
-        HttpManager.getInstance(mView.getContext()).getInTheatersMovies(new Callback<MovieEntity>() {
+        HttpManager.getInstance().getInTheatersMovies(new Callback<MovieEntity>() {
             @Override
             public void onResponse(Call<MovieEntity> call, Response<MovieEntity> response) {
                 mView.endLoad();
@@ -40,7 +40,7 @@ public class MovieListSubjectPresenter extends BasePresenterImpl<MovieListSubjec
     @Override
     public void loadComingSoonMovies() {
         mView.startLoad();
-        HttpManager.getInstance(mView.getContext()).getComingSoonMovies(new Callback<MovieEntity>() {
+        HttpManager.getInstance().getComingSoonMovies(new Callback<MovieEntity>() {
             @Override
             public void onResponse(Call<MovieEntity> call, Response<MovieEntity> response) {
                 mView.endLoad();
@@ -63,7 +63,7 @@ public class MovieListSubjectPresenter extends BasePresenterImpl<MovieListSubjec
     @Override
     public void loadTopMovies() {
         mView.startLoad();
-        HttpManager.getInstance(mView.getContext()).getTopMovies(new Callback<MovieEntity>() {
+        HttpManager.getInstance().getTopMovies(new Callback<MovieEntity>() {
             @Override
             public void onResponse(Call<MovieEntity> call, Response<MovieEntity> response) {
                 mView.endLoad();

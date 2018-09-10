@@ -17,7 +17,7 @@ public class HomePresenter extends BasePresenterImpl<HomeContract.View> implemen
     @Override
     public void loadData() {
         mView.startLoad();
-        HttpManager.getInstance(mView.getContext()).getInTheatersMovies(new Callback<MovieEntity>() {
+        HttpManager.getInstance().getInTheatersMovies(new Callback<MovieEntity>() {
             @Override
             public void onResponse(Call<MovieEntity> call, Response<MovieEntity> response) {
                 mView.endLoad();

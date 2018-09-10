@@ -16,6 +16,7 @@ import com.xuhan.videonote.moment.boxing.BoxingGlideLoader;
 
 public class HomeApplication extends Application {
 
+    private static Context mContext;
     private RefWatcher refWatcher;
 
     public HomeApplication() {
@@ -24,7 +25,7 @@ public class HomeApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        mContext = getApplicationContext();
         // 初始化 boxing选择器
         IBoxingMediaLoader loader = new BoxingGlideLoader();
         BoxingMediaLoader.getInstance().init(loader);
@@ -34,6 +35,10 @@ public class HomeApplication extends Application {
 
         //初始化LeakCanary
         refWatcher = LeakCanary.install(this);
+    }
+
+    public static Context getContext() {
+        return mContext;
     }
 
     /**

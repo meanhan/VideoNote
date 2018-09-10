@@ -34,8 +34,12 @@ public abstract class MVPBaseActivity<V extends BaseView, T extends BasePresente
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null)
+        if (mLoadingDialog != null) {
+            mLoadingDialog = null;
+        }
+        if (mPresenter != null) {
             mPresenter.detachView();
+        }
     }
 
     @Override

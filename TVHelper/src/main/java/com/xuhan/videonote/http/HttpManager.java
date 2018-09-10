@@ -2,6 +2,7 @@ package com.xuhan.videonote.http;
 
 import android.content.Context;
 
+import com.xuhan.videonote.application.HomeApplication;
 import com.xuhan.videonote.entity.MovieEntity;
 import com.xuhan.videonote.contants.ApiContants;
 import com.xuhan.videonote.utils.NetworkUtil;
@@ -83,11 +84,11 @@ public class HttpManager {
         mApiService = mRetrofit.create(ApiService.class);
     }
 
-    public static HttpManager getInstance(Context context) {
+    public static HttpManager getInstance() {
         if (mInstance == null) {
             synchronized (HttpManager.class) {
                 if (mInstance == null) {
-                    mInstance = new HttpManager(context.getApplicationContext());
+                    mInstance = new HttpManager(HomeApplication.getContext());
                 }
             }
         }
