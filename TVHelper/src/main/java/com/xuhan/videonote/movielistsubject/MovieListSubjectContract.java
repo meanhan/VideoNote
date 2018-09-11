@@ -17,7 +17,7 @@ public class MovieListSubjectContract {
          *
          * @param mVideoList
          */
-        void loadSuccess(List<MovieEntity.SubjectsEntity> mVideoList);
+        void loadSuccess(List<MovieEntity.SubjectsEntity> videoList);
 
         /**
          * 数据加载失败回调
@@ -35,6 +35,11 @@ public class MovieListSubjectContract {
          * 结束加载
          */
         void endLoad();
+
+        /**
+         * 加载更多成功
+         */
+        void loadSuccessMore(List<MovieEntity.SubjectsEntity> videoList);
     }
 
     interface Presenter extends BasePresenter<View> {
@@ -49,8 +54,16 @@ public class MovieListSubjectContract {
         void loadComingSoonMovies();
 
         /**
-         * 加载Top250
+         * 加载Top250,默认加载20条
          */
         void loadTopMovies();
+
+        /**
+         * 加载更多Top250
+         *
+         * @param start 开始位置
+         * @param count 加载数量
+         */
+        void loadTopMoviesMore(int start, int count);
     }
 }

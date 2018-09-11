@@ -122,5 +122,15 @@ public class HttpManager {
         mApiService.getTopMovies().enqueue(callback);
     }
 
+    /**
+     * 获取更多Top250
+     *
+     * @param start
+     * @param count
+     * @param callback
+     */
+    public void getTopMoviesMore(int start, int count, Callback<MovieEntity> callback) {
+        mApiService.getTopMoviesMore(String.valueOf(start), String.valueOf(count)).enqueue(callback);
+    }
 
 }

@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -75,24 +76,26 @@ public class MovieListSubjectActivity extends
                 if (viewHolder != null) {
                     mMovieView.setMovie(mDataList.get(adapterPosition));
                 }
+                if (adapterPosition == mDataList.size() - 1) {
+
+                    mPresenter.loadTopMoviesMore(mDataList.size() + 1, 20);
+                }
             }
         });
 
         mMoviePicker.addScrollStateChangeListener(new DiscreteScrollView.ScrollStateChangeListener<RecyclerView.ViewHolder>() {
             @Override
             public void onScrollStart(@NonNull RecyclerView.ViewHolder currentItemHolder, int adapterPosition) {
-
             }
 
             @Override
             public void onScrollEnd(@NonNull RecyclerView.ViewHolder currentItemHolder, int adapterPosition) {
-
             }
 
             @Override
             public void onScroll(float scrollPosition, int currentPosition, int newPosition, @Nullable RecyclerView.ViewHolder currentHolder, @Nullable RecyclerView.ViewHolder newCurrent) {
                 MovieEntity.SubjectsEntity current = mDataList.get(currentPosition);
-                if (newPosition >= 0 && newPosition < mMoviePicker.getAdapter().getItemCount()) {
+                if (newPosition >= 0 && newPosition < mDataList.size()) {
                     MovieEntity.SubjectsEntity next = mDataList.get(newPosition);
                     mMovieView.onScroll(1f - Math.abs(scrollPosition), current, next);
                 }
@@ -128,6 +131,14 @@ public class MovieListSubjectActivity extends
     @Override
     public void endLoad() {
         dismissLoadingDialog();
+    }
+
+    @Override
+    public void loadSuccessMore(List<MovieEntity.SubjectsEntity> videoList) {
+        mDataList.addAll(videoList);
+        mAdapter.setData(mDataList);
+        mAdapter.notifyDataSetChanged();
+        Log.i("ttttt", "loadSuccessMore:" + mDataList.size());
     }
 
     private void refreshView() {
