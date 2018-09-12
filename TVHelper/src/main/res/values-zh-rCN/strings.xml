@@ -1,5 +1,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">追剧助手</string>
+    <string name="action_camera">拍照</string>
     <string name="action_searcher">搜索</string>
     <string name="action_share">分享</string>
     <string name="action_scan">扫一扫</string>

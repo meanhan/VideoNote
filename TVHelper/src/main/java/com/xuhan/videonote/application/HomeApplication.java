@@ -5,7 +5,6 @@ import android.content.Context;
 
 import com.bilibili.boxing.BoxingMediaLoader;
 import com.bilibili.boxing.loader.IBoxingMediaLoader;
-import com.facebook.stetho.Stetho;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.xuhan.videonote.moment.boxing.BoxingGlideLoader;
@@ -31,7 +30,7 @@ public class HomeApplication extends Application {
         BoxingMediaLoader.getInstance().init(loader);
 
         // 初始化Facebook Stetho
-        Stetho.initializeWithDefaults(this);
+//        Stetho.initializeWithDefaults(this);
 
         //初始化LeakCanary
         refWatcher = LeakCanary.install(this);
